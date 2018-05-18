@@ -1,6 +1,6 @@
 package teamideals.com.trackitez;
 
-import android.arch.lifecycle.ViewModelProvider;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView_username;
+    private TextView mTextViewUsername;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        textView_username = findViewById(R.id.textView_username);
+        intent = getIntent();
+
+        User user = (User) intent.getExtras().getSerializable("user");
+
+        mTextViewUsername = findViewById(R.id.textView_username);
+
+        mTextViewUsername.setText(user.getfName());
 
     }
 

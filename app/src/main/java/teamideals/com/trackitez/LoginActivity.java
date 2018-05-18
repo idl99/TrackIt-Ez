@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         private final LoginActivity mActivity;
         private final String mEmail;
         private final String mPassword;
+        private User user = null;
 
         UserLoginTask(LoginActivity activity, String email, String password) {
             mActivity = activity;
@@ -138,13 +139,10 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
 
-            User user = User.getInstance(mEmail,mPassword);
-            if(user!=null){
-                return true;
-            }
+            user = User.getInstance(mEmail,mPassword);
 
             // TODO: register the new account here.
-            return false;
+            return user!=null;
 
         }
 
@@ -156,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 // Goes to a method which calls the next activity
                 Intent intent = new Intent(mActivity,MainActivity.class);
+                intent.putExtra("user",user);
                 mActivity.startActivity(intent);
                 finish();
             } else {

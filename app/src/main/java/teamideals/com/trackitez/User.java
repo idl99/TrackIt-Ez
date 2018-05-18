@@ -1,6 +1,8 @@
 package teamideals.com.trackitez;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     /**
      * User Entity class
