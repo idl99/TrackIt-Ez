@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI references.
     private EditText mEmailView;
-
     private EditText mPasswordView;
 
     @Override
@@ -158,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Goes to a method which calls the next activity
                 Intent intent = new Intent(mActivity,MainActivity.class);
                 mActivity.startActivity(intent);
+                finish();
             } else {
                 // Shows error toast
                 Toast.makeText(mActivity, R.string.error_incorrect_credentials, Toast.LENGTH_LONG)
