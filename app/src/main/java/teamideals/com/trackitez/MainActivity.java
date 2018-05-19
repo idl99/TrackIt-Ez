@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Getting user details passed from LoginActivity to MainActivity
         intent = getIntent();
         User sessionUser = (User) intent.getExtras().getSerializable("user");
 
