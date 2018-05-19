@@ -7,7 +7,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import teamideals.com.trackitez.databinding.ContentMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,12 +34,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         intent = getIntent();
+        User sessionUser = (User) intent.getExtras().getSerializable("user");
 
-        User user = (User) intent.getExtras().getSerializable("user");
+        /* Data Binding
 
-        mTextViewUsername = findViewById(R.id.textView_username);
+         1. Declare layout binding variable in XML file: check content_main.xml
 
-        mTextViewUsername.setText(user.getfName());
+         2. Gradles generates the binding class for relevant layout file - ContentMainBinding
+
+         3. Attach data binding to layout where binding variable declared, using
+         inflate and set??? methods where ??? is the name of the binding variable declared
+         in the layout file: setUser --> binding variable user in content_main.xml*/
+
+        ContentMainBinding contentMainBinding = ContentMainBinding.inflate(
+                getLayoutInflater(),(ViewGroup) findViewById(R.id.content_main_parent),true
+        ); // Attach data binding to content_main_parent view
+           // of layout where binding variable declared
+
+        contentMainBinding.setUser(sessionUser); // copy reference of sessionUser to user in
+                                                 // content_main.xml
 
     }
 
