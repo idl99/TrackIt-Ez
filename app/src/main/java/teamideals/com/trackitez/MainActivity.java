@@ -14,7 +14,6 @@ import teamideals.com.trackitez.databinding.ContentMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextViewUsername;
     private Intent intent;
 
     @Override
