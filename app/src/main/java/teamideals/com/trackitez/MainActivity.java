@@ -1,12 +1,13 @@
 package teamideals.com.trackitez;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     // UI elements
     private EditText mEditItemName;
     private EditText mEditItemExpiry;
+    private ListView mItemListView;
 
     // ViewModels
     private ItemEntryViewModel mItemEntryViewModel; // View model for item entry
@@ -56,9 +63,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mEditItemName = (EditText) findViewById(R.id.textEdit_item_name);
-        mEditItemExpiry = (EditText) findViewById(R.id.textEdit_item_expiry);
-
         // Getting user details passed from LoginActivity to MainActivity
         mIntent = getIntent();
         User sessionUser = (User) mIntent.getExtras().getSerializable("user");
@@ -66,49 +70,40 @@ public class MainActivity extends AppCompatActivity
         // Attaching view model to this instance of MainActivity
         mItemEntryViewModel = ViewModelProviders.of(this).get(ItemEntryViewModel.class);
 
-        /*// Getting values if existing from previous instances of MainActivity
-        mEditItemName.setText(mItemEntryViewModel.itemName);
-        mEditItemExpiry.setText(mItemEntryViewModel.itemExpiry);
-*/
+        mEditItemName = (EditText) findViewById(R.id.textEdit_item_name);
+        mEditItemExpiry = (EditText) findViewById(R.id.textEdit_item_expiry);
+        mItemListView = (ListView) findViewById(R.id.listView_itemList);
 
-        mEditItemName.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        mItemEntryViewModel.listOfItem.observe(
+            this, new Observer<List<Item>>() {
+                @Override
+                public void onChanged(@Nullable List<Item> itemList) {
+                    mItemListView.setAdapter(
+                            new ArrayAdapter<Item>(
+                                    getApplicationContext(),
+                                    android.R.layout.simple_list_item_2,
+                                    android.R.id.text1,
+                                    itemList
+                            ){
+                                @NonNull
+                                @Override
+                                public View getView(int position,
+                                                    @Nullable View convertView,
+                                                    @NonNull ViewGroup parent) {
+                                    View view = super.getView(position,convertView,parent);
+                                    TextView viewItemName = (TextView) view.findViewById(android.R.id.text1);
+                                    TextView viewItemExpiry = (TextView) view.findViewById(android.R.id.text2);
 
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        mItemEntryViewModel.item.itemName = s.toString();
-                    }
+                                    viewItemName.setText(itemList.get(position).getItemName());
+                                    viewItemExpiry.setText("Expiring on "+
+                                            itemList.get(position).getItemExpiry());
+                                    return view;
+                                }
+                            }
+                    );
                 }
+            }
         );
-
-        mEditItemExpiry.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        mItemEntryViewModel.item.itemExpiry = s.toString();
-                    }
-                }
-        );
-
     }
 
     @Override
@@ -162,10 +157,23 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void addItem(View view){
+        Item item = new Item(
+                mEditItemName.getText().toString(),
+                mEditItemExpiry.getText().toString()
+        );
+        List<Item> oldList = mItemEntryViewModel.getListOfItem().getValue();
+        oldList.add(item);
+        mItemEntryViewModel.getListOfItem().setValue(oldList);
+
+        mEditItemName.requestFocus();
+        mEditItemName.setText("");
+        mEditItemExpiry.setText("");
     }
 
 }

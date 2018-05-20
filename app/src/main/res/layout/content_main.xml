@@ -49,9 +49,17 @@
                     android:layout_weight="0.2"
                     android:text="Add"
                     android:textAllCaps="false"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:onClick="addItem"/>
 
             </LinearLayout>
+
+            <ListView
+                android:id="@+id/listView_itemList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            </ListView>
 
         </LinearLayout>
 
