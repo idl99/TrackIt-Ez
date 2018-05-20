@@ -74,10 +74,13 @@ public class MainActivity extends AppCompatActivity
         mEditItemExpiry = (EditText) findViewById(R.id.textEdit_item_expiry);
         mItemListView = (ListView) findViewById(R.id.listView_itemList);
 
+        // Observing changes to ItemEntryViewModel
         mItemEntryViewModel.listOfItem.observe(
             this, new Observer<List<Item>>() {
                 @Override
+                // Callback function invoked on change in observable ItemEntryViewModel
                 public void onChanged(@Nullable List<Item> itemList) {
+                    // Updates ListView by updating Data Adapter of view
                     mItemListView.setAdapter(
                             new ArrayAdapter<Item>(
                                     getApplicationContext(),
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity
                                     android.R.id.text1,
                                     itemList
                             ){
+                                // Overwriting generic view of simple_list_item_2
                                 @NonNull
                                 @Override
                                 public View getView(int position,
@@ -162,6 +166,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    // Function called on "Add" button click
     public void addItem(View view){
         Item item = new Item(
                 mEditItemName.getText().toString(),

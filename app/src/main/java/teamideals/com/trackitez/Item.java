@@ -18,8 +18,4 @@ public class Item {
         return itemExpiry;
     }
 
-    @Override
-    public String toString() {
-        return itemName;
-    }
 }
