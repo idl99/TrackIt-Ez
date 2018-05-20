@@ -1,9 +1,12 @@
 package teamideals.com.trackitez;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,14 +16,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-
-import teamideals.com.trackitez.databinding.ContentMainBinding;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Intent intent;
+    // Intent
+    private Intent mIntent;
+
+    // UI elements
+    private EditText mEditItemName;
+    private EditText mEditItemExpiry;
+
+    // ViewModels
+    private ItemEntryViewModel mItemEntryViewModel; // View model for item entry
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,24 +56,58 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mEditItemName = (EditText) findViewById(R.id.textEdit_item_name);
+        mEditItemExpiry = (EditText) findViewById(R.id.textEdit_item_expiry);
+
         // Getting user details passed from LoginActivity to MainActivity
-        intent = getIntent();
-        User sessionUser = (User) intent.getExtras().getSerializable("user");
+        mIntent = getIntent();
+        User sessionUser = (User) mIntent.getExtras().getSerializable("user");
 
-        /* Data Binding
-         1. Declare layout binding variable in XML file: check content_main.xml
-         2. Gradles generates the binding class for relevant layout file - ContentMainBinding
-         3. Attach data binding to layout where binding variable declared, using
-         inflate and set??? methods where ??? is the name of the binding variable declared
-         in the layout file: setUser --> binding variable user in content_main.xml*/
+        // Attaching view model to this instance of MainActivity
+        mItemEntryViewModel = ViewModelProviders.of(this).get(ItemEntryViewModel.class);
 
-        ContentMainBinding contentMainBinding = ContentMainBinding.inflate(
-                getLayoutInflater(),(ViewGroup) findViewById(R.id.content_main_parent),true
-        ); // Attach data binding to content_main_parent view
-        // of layout where binding variable declared
+        /*// Getting values if existing from previous instances of MainActivity
+        mEditItemName.setText(mItemEntryViewModel.itemName);
+        mEditItemExpiry.setText(mItemEntryViewModel.itemExpiry);
+*/
 
-        contentMainBinding.setUser(sessionUser); // copy reference of sessionUser to user in
-        // content_main.xml
+        mEditItemName.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        mItemEntryViewModel.itemName = s.toString();
+                    }
+                }
+        );
+
+        mEditItemExpiry.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        mItemEntryViewModel.itemExpiry = s.toString();
+                    }
+                }
+        );
 
     }
 
@@ -124,4 +167,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

@@ -2,11 +2,6 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <import type="teamideals.com.trackitez.User"/>
-        <variable name="user" type="teamideals.com.trackitez.User"/>
-    </data>
-
     <android.support.constraint.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -21,19 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <!--
-            Data binding invokes the getfName method of user instance bound to
-            this layout and attaches it to the text attribute of the text view
-        -->
-            <TextView
-                android:id="@+id/textView_user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{"Hello "+user.getfName()+" "+user.getlName()}'
-                android:textAlignment="center"
-                android:layout_margin="24dp"
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,14 +33,14 @@
                     android:hint=""/>
 
                 <EditText
-                    android:id="@+id/textEdit_item_date"
+                    android:id="@+id/textEdit_item_expiry"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:ems="10"
                     android:hint=""
                     android:inputType="date"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <Button
                     android:id="@+id/button_add_item"
