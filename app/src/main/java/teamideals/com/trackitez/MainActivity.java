@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        mItemEntryViewModel.itemName = s.toString();
+                        mItemEntryViewModel.item.itemName = s.toString();
                     }
                 }
         );
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        mItemEntryViewModel.itemExpiry = s.toString();
+                        mItemEntryViewModel.item.itemExpiry = s.toString();
                     }
                 }
         );

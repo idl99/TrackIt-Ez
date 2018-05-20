@@ -2,20 +2,12 @@ package teamideals.com.trackitez;
 
 public class Item {
 
-    private String itemName;
-    private String itemExpiry;
+    public String itemName;
+    public String itemExpiry;
 
-    public Item(String itemName, String itemExpiry) {
-        this.itemName = itemName;
-        this.itemExpiry = itemExpiry;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public String getmExpiryDate() {
-        return itemExpiry;
+    public Item(){
+        this.itemName = "";
+        this.itemExpiry = "";
     }
 
 }

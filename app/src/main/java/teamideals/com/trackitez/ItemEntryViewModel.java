@@ -4,12 +4,10 @@ import android.arch.lifecycle.ViewModel;
 
 public class ItemEntryViewModel extends ViewModel{
 
-    public String itemName;
-    public String itemExpiry;
+    public Item item;
 
-    public ItemEntryViewModel() {
-        this.itemName = itemName;
-        this.itemExpiry = itemExpiry;
+    public ItemEntryViewModel(){
+        item = new Item();
     }
 
 }
