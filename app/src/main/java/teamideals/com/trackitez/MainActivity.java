@@ -2,7 +2,6 @@ package teamideals.com.trackitez;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,11 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 
+import teamideals.com.trackitez.Entities.Item;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    // Intent
-    private Intent mIntent;
 
     // UI elements
     private EditText mEditItemName;
@@ -63,10 +61,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Getting user details passed from LoginActivity to MainActivity
-        mIntent = getIntent();
-        User sessionUser = (User) mIntent.getExtras().getSerializable("user");
-
         // Attaching view model to this instance of MainActivity
         mItemEntryViewModel = ViewModelProviders.of(this).get(ItemEntryViewModel.class);
 
@@ -99,8 +93,7 @@ public class MainActivity extends AppCompatActivity
                                     TextView viewItemExpiry = (TextView) view.findViewById(android.R.id.text2);
 
                                     viewItemName.setText(itemList.get(position).getItemName());
-                                    viewItemExpiry.setText("Expiring on "+
-                                            itemList.get(position).getItemExpiry());
+                                    viewItemExpiry.setText("Expiring on ");
                                     return view;
                                 }
                             }
@@ -169,8 +162,8 @@ public class MainActivity extends AppCompatActivity
     // Function called on "Add" button click
     public void addItem(View view){
         Item item = new Item(
-                mEditItemName.getText().toString(),
-                mEditItemExpiry.getText().toString()
+                0,
+                mEditItemName.getText().toString()
         );
         List<Item> oldList = mItemEntryViewModel.getListOfItem().getValue();
         oldList.add(item);

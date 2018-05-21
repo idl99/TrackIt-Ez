@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import teamideals.com.trackitez.Entities.Item;
+
 public class ItemEntryViewModel extends ViewModel{
 
     public MutableLiveData<List<Item>> listOfItem;

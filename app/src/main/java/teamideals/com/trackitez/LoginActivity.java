@@ -1,6 +1,8 @@
 package teamideals.com.trackitez;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,12 +30,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
 
+    private SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+
+        mSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+
+        if(mSharedPreferences.getBoolean("signedIn",false))
+            goToMainActivity(this);
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
@@ -156,10 +165,8 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 // Goes to a method which calls the next activity
-                Intent intent = new Intent(mActivity,MainActivity.class);
-                intent.putExtra("user",user);
-                mActivity.startActivity(intent);
-                finish();
+                mSharedPreferences.edit().putBoolean("signedIn",true).apply();
+                goToMainActivity(mActivity);
             } else {
                 // Shows error toast
                 Toast.makeText(mActivity, R.string.error_incorrect_credentials, Toast.LENGTH_LONG)
@@ -175,6 +182,12 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
         }
 
+    }
+
+    public void goToMainActivity(Activity activity){
+        Intent intent = new Intent(activity,MainActivity.class);
+        activity.startActivity(intent);
+        finish();
     }
 
 }
