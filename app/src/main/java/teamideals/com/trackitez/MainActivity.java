@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,23 +17,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
-
 import teamideals.com.trackitez.Entities.Item;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // UI elements
-    private EditText mEditItemName;
-    private EditText mEditItemExpiry;
     private ListView mItemListView;
+    FloatingActionButton mFabExpandMenu;
+    LinearLayout mFabScanTag;
+    LinearLayout mFabScanReceipt;
+    LinearLayout mFabGroceryList;
+    boolean isFABOpen;
 
     // ViewModels
-    private ItemEntryViewModel mItemEntryViewModel; // View model for item entry
+    private ItemListViewModel mItemListViewModel; // View model for item entry
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,24 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // Attaching view model to this instance of MainActivity
+        mItemListViewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+
+        mItemListView = (ListView) findViewById(R.id.listView_itemList);
+        List<Item> itemList = mItemListViewModel.getListOfItem().getValue();
+
+        mFabExpandMenu = (FloatingActionButton) findViewById(R.id.fab_expand_menu);
+        mFabScanTag = (LinearLayout) findViewById(R.id.fab_scan_tag);
+        mFabScanReceipt = (LinearLayout) findViewById(R.id.fab_scan_receipt);
+        mFabGroceryList = (LinearLayout) findViewById(R.id.fab_grocery_list);
+        mFabExpandMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(!isFABOpen){
+                    showFABMenu();
+                }else{
+                    closeFABMenu();
+                }
             }
         });
 
@@ -61,46 +75,32 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Attaching view model to this instance of MainActivity
-        mItemEntryViewModel = ViewModelProviders.of(this).get(ItemEntryViewModel.class);
-
-        mEditItemName = (EditText) findViewById(R.id.textEdit_item_name);
-        mEditItemExpiry = (EditText) findViewById(R.id.textEdit_item_expiry);
-        mItemListView = (ListView) findViewById(R.id.listView_itemList);
-
-        // Observing changes to ItemEntryViewModel
-        mItemEntryViewModel.listOfItem.observe(
-            this, new Observer<List<Item>>() {
-                @Override
-                // Callback function invoked on change in observable ItemEntryViewModel
-                public void onChanged(@Nullable List<Item> itemList) {
-                    // Updates ListView by updating Data Adapter of view
-                    mItemListView.setAdapter(
-                            new ArrayAdapter<Item>(
-                                    getApplicationContext(),
-                                    android.R.layout.simple_list_item_2,
-                                    android.R.id.text1,
-                                    itemList
-                            ){
-                                // Overwriting generic view of simple_list_item_2
-                                @NonNull
-                                @Override
-                                public View getView(int position,
-                                                    @Nullable View convertView,
-                                                    @NonNull ViewGroup parent) {
-                                    View view = super.getView(position,convertView,parent);
-                                    TextView viewItemName = (TextView) view.findViewById(android.R.id.text1);
-                                    TextView viewItemExpiry = (TextView) view.findViewById(android.R.id.text2);
-
-                                    viewItemName.setText(itemList.get(position).getItemName());
-                                    viewItemExpiry.setText("Expiring on ");
-                                    return view;
-                                }
-                            }
-                    );
+        mItemListView.setAdapter(
+                new ArrayAdapter<Item>(
+                        getApplicationContext(),
+                        android.R.layout.simple_list_item_1,
+                        android.R.id.text1,
+                        itemList) {
+                    @NonNull
+                    @Override
+                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                        View view = super.getView(position, convertView, parent);
+                        TextView viewItemName = (TextView) view.findViewById(android.R.id.text1);
+                        viewItemName.setText(itemList.get(position).getItemName());
+                        return view;
+                    }
                 }
-            }
         );
+
+        mItemListViewModel.getListOfItem().observe(
+                this, new Observer<List<Item>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Item> items) {
+                        ((BaseAdapter) mItemListView.getAdapter()).notifyDataSetChanged();
+                    }
+                }
+        );
+
     }
 
     @Override
@@ -159,19 +159,40 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    // Function called on "Add" button click
-    public void addItem(View view){
-        Item item = new Item(
-                0,
-                mEditItemName.getText().toString()
-        );
-        List<Item> oldList = mItemEntryViewModel.getListOfItem().getValue();
-        oldList.add(item);
-        mItemEntryViewModel.getListOfItem().setValue(oldList);
+    /**
+     * Method which expands the FAB menu
+     */
+    private void showFABMenu(){
+        isFABOpen=true;
+        mFabExpandMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
 
-        mEditItemName.requestFocus();
-        mEditItemName.setText("");
-        mEditItemExpiry.setText("");
+        mFabScanTag.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
+        mFabScanTag.setVisibility(View.VISIBLE);
+
+        mFabScanReceipt.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+        mFabScanReceipt.setVisibility(View.VISIBLE);
+
+        mFabGroceryList.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
+        mFabGroceryList.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * Method which collapses the FAB menu
+     */
+    private void closeFABMenu(){
+        isFABOpen=false;
+        mFabExpandMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp));
+
+        mFabScanTag.animate().translationY(0);
+        mFabScanTag.setVisibility(View.INVISIBLE);
+
+        mFabScanReceipt.animate().translationY(0);
+        mFabScanReceipt.setVisibility(View.INVISIBLE);
+
+        mFabGroceryList.animate().translationY(0);
+        mFabGroceryList.setVisibility(View.INVISIBLE);
+
     }
 
 }

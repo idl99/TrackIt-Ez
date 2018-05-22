@@ -14,20 +14,129 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:layout_height="?android:attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_height="300dp"
+        android:layout_gravity="bottom|end">
+
+        <LinearLayout
+            android:id="@+id/fab_scan_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan Tag"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:background="@drawable/fab_corners"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="@dimen/standard_45"
+                android:layout_height="@dimen/standard_45"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/standard_21"
+                android:src="@drawable/ic_scan_tag_24dp"
+                android:scaleType="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:id="@+id/fab_scan_receipt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan Receipt"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:background="@drawable/fab_corners"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="@dimen/standard_45"
+                android:layout_height="@dimen/standard_45"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/standard_21"
+                android:src="@drawable/ic_scan_receipt_24dp"
+                android:scaleType="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fab_grocery_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grocery List"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:background="@drawable/fab_corners"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="@dimen/standard_45"
+                android:layout_height="@dimen/standard_45"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/standard_21"
+                android:src="@drawable/ic_grocery_list_24dp"
+                android:scaleType="center"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_expand_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_add_white_24dp"
+            android:scaleType="center"/>
+
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
