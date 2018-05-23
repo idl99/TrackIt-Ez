@@ -164,18 +164,18 @@ public class MainActivity extends AppCompatActivity
      * Method which expands the FAB menu
      */
     private void showFABMenu(){
+
         isFABOpen=true;
         mFabExpandMenu.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
 
         mFabScanTag.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        mFabScanTag.setVisibility(View.VISIBLE);
-
         mFabAddItem.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
-        mFabAddItem.setVisibility(View.VISIBLE);
-
         mFabGroceryList.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
-        mFabGroceryList.setVisibility(View.VISIBLE);
+
+        mFabScanTag.getChildAt(0).setVisibility(View.VISIBLE);
+        mFabAddItem.getChildAt(0).setVisibility(View.VISIBLE);
+        mFabGroceryList.getChildAt(0).setVisibility(View.VISIBLE);
 
     }
 
@@ -183,18 +183,19 @@ public class MainActivity extends AppCompatActivity
      * Method which collapses the FAB menu
      */
     private void closeFABMenu(){
+
         isFABOpen=false;
         mFabExpandMenu.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
 
         mFabScanTag.animate().translationY(0);
-        mFabScanTag.setVisibility(View.INVISIBLE);
+        mFabScanTag.getChildAt(0).setVisibility(View.INVISIBLE);
 
         mFabAddItem.animate().translationY(0);
-        mFabAddItem.setVisibility(View.INVISIBLE);
+        mFabAddItem.getChildAt(0).setVisibility(View.INVISIBLE);
 
         mFabGroceryList.animate().translationY(0);
-        mFabGroceryList.setVisibility(View.INVISIBLE);
+        mFabGroceryList.getChildAt(0).setVisibility(View.INVISIBLE);
 
     }
 

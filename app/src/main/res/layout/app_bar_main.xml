@@ -34,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:orientation="horizontal"
-            android:visibility="invisible"
             >
 
             <TextView
@@ -49,6 +48,7 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:visibility="invisible"
                 />
 
             <android.support.design.widget.FloatingActionButton
@@ -68,7 +68,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:orientation="horizontal"
-            android:visibility="invisible"
             >
 
             <TextView
@@ -83,6 +82,7 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:visibility="invisible"
                 />
 
             <android.support.design.widget.FloatingActionButton
@@ -101,7 +101,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:orientation="horizontal"
-            android:visibility="invisible"
             >
 
             <TextView
@@ -116,6 +115,7 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:visibility="invisible"
                 />
 
             <android.support.design.widget.FloatingActionButton
