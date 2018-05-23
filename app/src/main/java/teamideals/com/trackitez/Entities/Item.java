@@ -2,20 +2,20 @@ package teamideals.com.trackitez.Entities;
 
 public class Item {
 
-    private int itemId;
+    private String barcode;
     private String itemName;
 
     public Item(){
 
     }
 
-    public Item(int itemId, String itemName){
-        this.itemId = itemId;
+    public Item(String barcode, String itemName){
+        this.barcode = barcode;
         this.itemName = itemName;
     }
 
-    public int getItemId() {
-        return itemId;
+    public String getBarcode() {
+        return barcode;
     }
 
     public String getItemName() {
@@ -29,7 +29,7 @@ public class Item {
         }
 
         Item objItem = (Item) obj;
-        if(objItem.getItemId()==this.itemId){
+        if(objItem.getBarcode().equals(this.barcode)){
             return true;
         }
 
