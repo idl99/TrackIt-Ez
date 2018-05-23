@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     private ListView mItemListView;
     FloatingActionButton mFabExpandMenu;
     LinearLayout mFabScanTag;
-    LinearLayout mFabScanReceipt;
+    LinearLayout mFabAddItem;
     LinearLayout mFabGroceryList;
     boolean isFABOpen;
 
@@ -53,8 +53,9 @@ public class MainActivity extends AppCompatActivity
 
         mFabExpandMenu = (FloatingActionButton) findViewById(R.id.fab_expand_menu);
         mFabScanTag = (LinearLayout) findViewById(R.id.fab_scan_tag);
-        mFabScanReceipt = (LinearLayout) findViewById(R.id.fab_scan_receipt);
+        mFabAddItem = (LinearLayout) findViewById(R.id.fab_add_item);
         mFabGroceryList = (LinearLayout) findViewById(R.id.fab_grocery_list);
+
         mFabExpandMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,8 +171,8 @@ public class MainActivity extends AppCompatActivity
         mFabScanTag.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         mFabScanTag.setVisibility(View.VISIBLE);
 
-        mFabScanReceipt.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
-        mFabScanReceipt.setVisibility(View.VISIBLE);
+        mFabAddItem.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
+        mFabAddItem.setVisibility(View.VISIBLE);
 
         mFabGroceryList.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
         mFabGroceryList.setVisibility(View.VISIBLE);
@@ -189,8 +190,8 @@ public class MainActivity extends AppCompatActivity
         mFabScanTag.animate().translationY(0);
         mFabScanTag.setVisibility(View.INVISIBLE);
 
-        mFabScanReceipt.animate().translationY(0);
-        mFabScanReceipt.setVisibility(View.INVISIBLE);
+        mFabAddItem.animate().translationY(0);
+        mFabAddItem.setVisibility(View.INVISIBLE);
 
         mFabGroceryList.animate().translationY(0);
         mFabGroceryList.setVisibility(View.INVISIBLE);
