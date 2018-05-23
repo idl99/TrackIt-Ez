@@ -1,4 +1,4 @@
-package teamideals.com.trackitez;
+package teamideals.com.trackitez.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import teamideals.com.trackitez.R;
+import teamideals.com.trackitez.entities.User;
 
 /**
  * A login screen that offers login via email/password.

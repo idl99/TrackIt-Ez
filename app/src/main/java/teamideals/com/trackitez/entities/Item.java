@@ -1,4 +1,4 @@
-package teamideals.com.trackitez.Entities;
+package teamideals.com.trackitez.entities;
 
 public class Item {
 

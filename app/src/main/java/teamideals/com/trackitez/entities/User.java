@@ -1,4 +1,4 @@
-package teamideals.com.trackitez;
+package teamideals.com.trackitez.entities;
 
 import java.io.Serializable;
 

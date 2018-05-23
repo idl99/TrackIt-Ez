@@ -1,7 +1,8 @@
-package teamideals.com.trackitez;
+package teamideals.com.trackitez.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,7 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
-import teamideals.com.trackitez.Entities.Item;
+import teamideals.com.trackitez.entities.Item;
+import teamideals.com.trackitez.viewmodels.ItemListViewModel;
+import teamideals.com.trackitez.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,8 +55,18 @@ public class MainActivity extends AppCompatActivity
         List<Item> itemList = mItemListViewModel.getListOfItem().getValue();
 
         mFabExpandMenu = (FloatingActionButton) findViewById(R.id.fab_expand_menu);
+
         mFabScanTag = (LinearLayout) findViewById(R.id.fab_scan_tag);
+
         mFabAddItem = (LinearLayout) findViewById(R.id.fab_add_item);
+        mFabAddItem.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),AddItemActivity.class);
+                getApplicationContext().startActivity(intent);
+            }
+        });
+
         mFabGroceryList = (LinearLayout) findViewById(R.id.fab_grocery_list);
 
         mFabExpandMenu.setOnClickListener(new View.OnClickListener() {
