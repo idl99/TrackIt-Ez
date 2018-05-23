@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fab_scan_receipt_text"
+                android:text="@string/fab_add_item_text"
                 android:textSize="14sp"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center"
@@ -90,7 +90,7 @@
                 android:layout_height="@dimen/standard_45"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/standard_21"
-                android:src="@drawable/ic_scan_receipt_24dp"
+                android:src="@drawable/ic_add_white_24dp"
                 android:scaleType="center"/>
 
         </LinearLayout>
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_add_white_24dp"
+            android:src="@drawable/ic_keyboard_arrow_up_white_24dp"
             android:scaleType="center"/>
 
     </FrameLayout>

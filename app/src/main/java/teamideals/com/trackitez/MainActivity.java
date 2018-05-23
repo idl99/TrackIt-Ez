@@ -164,7 +164,8 @@ public class MainActivity extends AppCompatActivity
      */
     private void showFABMenu(){
         isFABOpen=true;
-        mFabExpandMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
+        mFabExpandMenu.setImageDrawable(getResources().
+                getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
 
         mFabScanTag.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         mFabScanTag.setVisibility(View.VISIBLE);
@@ -182,7 +183,8 @@ public class MainActivity extends AppCompatActivity
      */
     private void closeFABMenu(){
         isFABOpen=false;
-        mFabExpandMenu.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp));
+        mFabExpandMenu.setImageDrawable(getResources().
+                getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
 
         mFabScanTag.animate().translationY(0);
         mFabScanTag.setVisibility(View.INVISIBLE);
