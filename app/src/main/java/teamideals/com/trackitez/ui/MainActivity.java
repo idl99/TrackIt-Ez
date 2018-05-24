@@ -182,12 +182,13 @@ public class MainActivity extends AppCompatActivity
         mFabExpandMenu.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
 
-        mFabScanTag.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
-        mFabAddItem.animate().translationY(-getResources().getDimension(R.dimen.standard_105));
-        mFabGroceryList.animate().translationY(-getResources().getDimension(R.dimen.standard_155));
-
+        mFabScanTag.setTranslationY(-getResources().getDimension(R.dimen.standard_55));
         mFabScanTag.getChildAt(0).setVisibility(View.VISIBLE);
+
+        mFabAddItem.setTranslationY(-getResources().getDimension(R.dimen.standard_105));
         mFabAddItem.getChildAt(0).setVisibility(View.VISIBLE);
+
+        mFabGroceryList.setTranslationY(-getResources().getDimension(R.dimen.standard_155));
         mFabGroceryList.getChildAt(0).setVisibility(View.VISIBLE);
 
     }
@@ -201,13 +202,13 @@ public class MainActivity extends AppCompatActivity
         mFabExpandMenu.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
 
-        mFabScanTag.animate().translationY(0);
+        mFabScanTag.setTranslationY(0);
         mFabScanTag.getChildAt(0).setVisibility(View.INVISIBLE);
 
-        mFabAddItem.animate().translationY(0);
+        mFabAddItem.setTranslationY(0);
         mFabAddItem.getChildAt(0).setVisibility(View.INVISIBLE);
 
-        mFabGroceryList.animate().translationY(0);
+        mFabGroceryList.setTranslationY(0);
         mFabGroceryList.getChildAt(0).setVisibility(View.INVISIBLE);
 
     }
