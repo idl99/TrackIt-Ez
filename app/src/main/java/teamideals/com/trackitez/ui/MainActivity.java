@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         mFabAddItem.getChildAt(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),AddItemActivity.class);
+                Intent intent = new Intent(getApplicationContext(),AddUnitActivity.class);
                 getApplicationContext().startActivity(intent);
             }
         });

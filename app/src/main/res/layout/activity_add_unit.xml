@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AddUnitActivity">
+
+    <com.kofigyan.stateprogressbar.StateProgressBar
+        android:id="@+id/add_item_spb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        app:spb_currentStateNumber="one"
+        app:spb_maxStateNumber="three"
+        app:spb_stateSize="60dp"
+        app:spb_stateLineThickness="10dp"
+        app:spb_stateBackgroundColor="@color/colorPrimary"
+        app:spb_stateForegroundColor="@color/colorAccent"
+        app:spb_currentStateDescriptionColor="@color/colorAccent"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="teamideals.com.trackitez.ui.EnterItemDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_enter_item_details" />
+
+    </FrameLayout>
+
+</LinearLayout>

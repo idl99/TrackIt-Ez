@@ -27,7 +27,7 @@
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.AddItemActivity"></activity>
+        <activity android:name=".ui.AddUnitActivity"></activity>
     </application>
 
 </manifest>
