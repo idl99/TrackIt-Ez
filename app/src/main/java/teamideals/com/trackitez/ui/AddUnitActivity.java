@@ -9,7 +9,7 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import teamideals.com.trackitez.R;
 
 public class AddUnitActivity extends FragmentActivity
-        implements EnterItemDetails.OnFragmentInteractionListener {
+        implements ItemLookup.OnFragmentInteractionListener {
 
     private StateProgressBar mStaticProgressBar;
 
