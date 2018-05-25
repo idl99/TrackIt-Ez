@@ -94,17 +94,7 @@ public class MainActivity extends AppCompatActivity
                         getApplicationContext(),
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
-                        itemList) {
-                    @NonNull
-                    @Override
-                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        View view = super.getView(position, convertView, parent);
-                        TextView viewItemName = (TextView) view.findViewById(android.R.id.text1);
-                        viewItemName.setText(itemList.get(position).getItemName());
-                        return view;
-                    }
-                }
-        );
+                        itemList));
 
         mItemListViewModel.getListOfItem().observe(
                 this, new Observer<List<Item>>() {
