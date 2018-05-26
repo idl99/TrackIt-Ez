@@ -7,8 +7,8 @@ import teamideals.com.trackitez.entities.Item;
 public class ItemDatastore implements Datastore<Item> {
 
     private static final ItemDatastore ourInstance = new ItemDatastore();
-    private static final DatabaseReference dsReference =
-            Datastore.firebaseDatabase.getReference("/userDatastore/userId1/unitsStored");
+    private final DatabaseReference dsReference =
+            Datastore.firebaseDatabase.getReference("/itemDatastore");
 
     public static ItemDatastore getInstance() {
         return ourInstance;
@@ -30,5 +30,9 @@ public class ItemDatastore implements Datastore<Item> {
     @Override
     public void remove(Item item) {
 
+    }
+
+    public DatabaseReference getRef() {
+        return this.dsReference;
     }
 }
