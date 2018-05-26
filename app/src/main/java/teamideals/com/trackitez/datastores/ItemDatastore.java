@@ -34,7 +34,7 @@ public class ItemDatastore implements Datastore<Item> {
 
     @Override
     public DatabaseReference getRef() {
-        return null;
+        return this.dsReference;
     }
 
 }

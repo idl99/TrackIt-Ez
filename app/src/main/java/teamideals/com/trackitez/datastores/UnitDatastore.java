@@ -34,7 +34,7 @@ public class UnitDatastore implements Datastore<Unit> {
 
     @Override
     public DatabaseReference getRef() {
-        return null;
+        return this.dsReference;
     }
     
 }
