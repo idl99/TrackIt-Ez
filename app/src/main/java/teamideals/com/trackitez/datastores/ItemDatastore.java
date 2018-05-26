@@ -32,7 +32,9 @@ public class ItemDatastore implements Datastore<Item> {
 
     }
 
+    @Override
     public DatabaseReference getRef() {
-        return this.dsReference;
+        return null;
     }
+
 }

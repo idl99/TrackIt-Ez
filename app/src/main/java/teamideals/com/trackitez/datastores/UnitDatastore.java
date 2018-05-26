@@ -7,7 +7,7 @@ import teamideals.com.trackitez.entities.Unit;
 public class UnitDatastore implements Datastore<Unit> {
 
     private static final UnitDatastore ourInstance = new UnitDatastore();
-    private static final DatabaseReference dsReference =
+    private final DatabaseReference dsReference =
             Datastore.firebaseDatabase.getReference("/userDatastore/userId1/unitsStored");
 
     public static UnitDatastore getInstance() {
@@ -31,4 +31,10 @@ public class UnitDatastore implements Datastore<Unit> {
     public void remove(Unit unit) {
 
     }
+
+    @Override
+    public DatabaseReference getRef() {
+        return null;
+    }
+    
 }
