@@ -1,17 +1,21 @@
 package teamideals.com.trackitez.entities;
 
-public class Item {
+import java.util.List;
+
+public class Item implements DatastoreEntity {
 
     private String barcode;
     private String itemName;
+    private List<ItemCategory> categories;
 
     public Item(){
 
     }
 
-    public Item(String barcode, String itemName){
+    public Item(String barcode, String itemName, List<ItemCategory> categories){
         this.barcode = barcode;
         this.itemName = itemName;
+        this.categories = categories;
     }
 
     public String getBarcode() {
@@ -20,6 +24,10 @@ public class Item {
 
     public String getItemName() {
         return itemName;
+    }
+
+    public List<ItemCategory> getCategories() {
+        return categories;
     }
 
     @Override
@@ -41,5 +49,6 @@ public class Item {
     public String toString() {
         return itemName;
     }
+
 
 }

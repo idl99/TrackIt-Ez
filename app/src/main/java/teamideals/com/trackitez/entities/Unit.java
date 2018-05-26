@@ -2,7 +2,7 @@ package teamideals.com.trackitez.entities;
 
 import java.time.LocalDate;
 
-public class Unit {
+public class Unit implements DatastoreEntity {
 
     // Required Parameters
     private Item item;
