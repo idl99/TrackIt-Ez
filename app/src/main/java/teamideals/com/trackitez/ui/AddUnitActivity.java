@@ -34,7 +34,7 @@ public class AddUnitActivity extends FragmentActivity
                 new String[]{"Item\nDetails","Add\nQuantities","Scan\nTags"}
         );
         mStaticProgressBar.setDescriptionTopSpaceIncrementer(40);
-        mStaticProgressBar.setStateNumberTextSize(40);
+        mStaticProgressBar.setStateNumberTextSize(24);
         mStaticProgressBar.setStateDescriptionSize(18);
     }
 
