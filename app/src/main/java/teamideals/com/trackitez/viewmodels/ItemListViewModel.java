@@ -5,21 +5,19 @@ import android.arch.lifecycle.ViewModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
+import teamideals.com.trackitez.datastores.ItemDatastore;
 import teamideals.com.trackitez.entities.Item;
 
 public class ItemListViewModel extends ViewModel{
 
-    private final DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().
-            getReference("/itemDatastore/");
+    private final ItemDatastore itemDatastore = ItemDatastore.getInstance();
 
     private MutableLiveData<List<Item>> mListOfItem;
 
     public ItemListViewModel(){
-        mDatabaseReference.addChildEventListener(
+        itemDatastore.getRef().addChildEventListener(
                 new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
