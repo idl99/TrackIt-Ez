@@ -6,17 +6,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.MultiAutoCompleteTextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.entities.Item;
 import teamideals.com.trackitez.viewmodels.ItemListViewModel;
@@ -41,13 +39,13 @@ public class ItemLookup extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    ItemListViewModel mViewModel;
+
+    private Unbinder unbinder;
     @BindView(R.id.actv_item_name)
     AutoCompleteTextView mItemName;
-
     @BindView(R.id.multiAutoCompleteTextView)
     MultiAutoCompleteTextView mItemCategories;
-
-    ItemListViewModel mViewModel;
 
     public ItemLookup() {
         // Required empty public constructor
@@ -79,6 +77,7 @@ public class ItemLookup extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mViewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+        setRetainInstance(true);
     }
 
     @Override
@@ -87,37 +86,17 @@ public class ItemLookup extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_enter_item_details,
                 container, false);
-        ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this,view);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mItemName.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                }
-        );
         mItemName.setAdapter(new ArrayAdapter<Item>(getContext(),
                 android.R.layout.select_dialog_item,mViewModel.getListOfItem().getValue())
         );
-        mItemName.setThreshold(1);
-
+        mItemName.setThreshold(3);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -143,6 +122,7 @@ public class ItemLookup extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        unbinder.unbind();
     }
 
     /**
