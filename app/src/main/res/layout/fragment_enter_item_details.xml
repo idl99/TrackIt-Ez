@@ -8,70 +8,80 @@
     android:orientation="vertical"
     tools:context=".ui.ItemLookup">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/green_border"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ITEM NAME" />
-
-            <AutoCompleteTextView
-                android:id="@+id/actv_item_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/green_border"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ITEM NAME" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_item_name"
+                    android:hint="Eg: Milk Powder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/green_border"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CATEGORIES" />
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/multiAutoCompleteTextView"
+                    android:hint="Eg: Dairy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/imageButton"
+                android:background="@drawable/green_border_with_fill"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_gravity="bottom|right"
+                android:text="NEXT"
+                android:textColor="#FFFFFF"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/green_border"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CATEGORIES" />
 
-            <MultiAutoCompleteTextView
-                android:id="@+id/multiAutoCompleteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/imageButton"
-        android:background="@drawable/green_border_with_fill"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        app:layout_anchor="@+id/linearLayout"
-        app:layout_anchorGravity="bottom|right"
-        android:text="NEXT" />
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
