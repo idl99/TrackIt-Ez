@@ -1,34 +1,24 @@
 package teamideals.com.trackitez.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.MultiAutoCompleteTextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 import teamideals.com.trackitez.R;
-import teamideals.com.trackitez.entities.Item;
-import teamideals.com.trackitez.viewmodels.ItemListViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ItemLookup.OnFragmentInteractionListener} interface
+ * {@link ScanTag.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ItemLookup#newInstance} factory method to
+ * Use the {@link ScanTag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItemLookup extends Fragment {
+public class ScanTag extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,17 +30,7 @@ public class ItemLookup extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    ItemListViewModel mViewModel;
-
-    private Unbinder unbinder;
-    @BindView(R.id.actv_item_name)
-    AutoCompleteTextView mItemName;
-    @BindView(R.id.multiAutoCompleteTextView)
-    MultiAutoCompleteTextView mItemCategories;
-    @BindView(R.id.step1Btn)
-    Button mStep1Btn;
-
-    public ItemLookup() {
+    public ScanTag() {
         // Required empty public constructor
     }
 
@@ -60,11 +40,11 @@ public class ItemLookup extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemLookup.
+     * @return A new instance of fragment ScanTag.
      */
     // TODO: Rename and change types and number of parameters
-    public static ItemLookup newInstance(String param1, String param2) {
-        ItemLookup fragment = new ItemLookup();
+    public static ScanTag newInstance(String param1, String param2) {
+        ScanTag fragment = new ScanTag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,35 +59,13 @@ public class ItemLookup extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mViewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
-        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_enter_item_details,
-                container, false);
-        unbinder = ButterKnife.bind(this,view);
-
-        mStep1Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((AddUnitActivity)getActivity()).stepProgress(2);
-            }
-        });
-
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mItemName.setAdapter(new ArrayAdapter<Item>(getContext(),
-                android.R.layout.select_dialog_item,mViewModel.getListOfItem().getValue())
-        );
-        mItemName.setThreshold(3);
+        return inflater.inflate(R.layout.fragment_scan_tag, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -126,14 +84,12 @@ public class ItemLookup extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        unbinder.unbind();
     }
 
     /**
@@ -150,5 +106,4 @@ public class ItemLookup extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }

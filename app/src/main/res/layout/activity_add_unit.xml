@@ -21,11 +21,10 @@
         app:spb_stateForegroundColor="@color/colorAccent"
         app:spb_currentStateDescriptionColor="@color/colorAccent"/>
 
-        <fragment
-            android:id="@+id/fragment"
+        <FrameLayout
+            android:id="@+id/fragmentView"
             android:name="teamideals.com.trackitez.ui.ItemLookup"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_enter_item_details" />
+            android:layout_height="match_parent" />
 
 </LinearLayout>
