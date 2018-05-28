@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.ItemLookup">
+    tools:context=".ui.ItemDetails">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,9 +35,9 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/actv_item_name"
-                    android:hint="Eg: Milk Powder"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="Eg: Milk Powder" />
 
             </LinearLayout>
 
@@ -61,9 +60,9 @@
 
                 <MultiAutoCompleteTextView
                     android:id="@+id/multiAutoCompleteTextView"
-                    android:hint="Eg: Dairy"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="Eg: Dairy" />
 
             </LinearLayout>
 
@@ -73,11 +72,11 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:background="@drawable/green_border"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
                     android:layout_margin="10dp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/green_border"
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
@@ -88,22 +87,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="QUANTITY"
-                        />
+                        android:text="QUANTITY" />
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="@drawable/green_border"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
                     android:layout_margin="10dp"
+                    android:layout_weight="0.7"
+                    android:background="@drawable/green_border"
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
@@ -113,8 +110,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="EXPIRY DATE"
-                        />
+                        android:text="EXPIRY DATE" />
 
                     <EditText
                         android:layout_width="match_parent"
@@ -127,13 +123,13 @@
 
             <Button
                 android:id="@+id/step1Btn"
-                android:background="@drawable/green_border_with_fill"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_gravity="bottom|right"
+                android:layout_margin="10dp"
+                android:background="@drawable/green_border_with_fill"
                 android:text="NEXT"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
 

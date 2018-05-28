@@ -11,20 +11,23 @@
         android:id="@+id/add_item_spb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_margin="25dp"
+        app:spb_checkStateCompleted="true"
+        app:spb_currentStateDescriptionColor="@color/colorAccent"
         app:spb_currentStateNumber="one"
+        app:spb_descriptionTopSpaceIncrementer="20dp"
         app:spb_maxStateNumber="three"
-        app:spb_stateSize="60dp"
-        app:spb_stateLineThickness="10dp"
         app:spb_stateBackgroundColor="@color/colorPrimary"
+        app:spb_stateDescriptionSize="18dp"
         app:spb_stateForegroundColor="@color/colorAccent"
-        app:spb_currentStateDescriptionColor="@color/colorAccent"/>
+        app:spb_stateLineThickness="10dp"
+        app:spb_stateSize="40dp"
+        app:spb_stateTextSize="18dp" />
 
-        <FrameLayout
-            android:id="@+id/fragmentView"
-            android:name="teamideals.com.trackitez.ui.ItemLookup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <FrameLayout
+        android:id="@+id/fragmentView"
+        android:name="teamideals.com.trackitez.ui.ItemLookup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

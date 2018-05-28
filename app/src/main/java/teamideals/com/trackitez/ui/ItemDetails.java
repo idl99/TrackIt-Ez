@@ -13,22 +13,26 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
+import java.util.ArrayList;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.entities.Item;
+import teamideals.com.trackitez.entities.ItemCategory;
+import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
 import teamideals.com.trackitez.viewmodels.ItemListViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ItemLookup.OnFragmentInteractionListener} interface
+ * {@link ItemDetails.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ItemLookup#newInstance} factory method to
+ * Use the {@link ItemDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItemLookup extends Fragment {
+public class ItemDetails extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,7 +44,8 @@ public class ItemLookup extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    ItemListViewModel mViewModel;
+    ItemListViewModel mItemListViewModel;
+    AddUnitViewModel mAddUnitViewModel;
 
     private Unbinder unbinder;
     @BindView(R.id.actv_item_name)
@@ -50,7 +55,7 @@ public class ItemLookup extends Fragment {
     @BindView(R.id.step1Btn)
     Button mStep1Btn;
 
-    public ItemLookup() {
+    public ItemDetails() {
         // Required empty public constructor
     }
 
@@ -60,11 +65,11 @@ public class ItemLookup extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemLookup.
+     * @return A new instance of fragment ItemDetails.
      */
     // TODO: Rename and change types and number of parameters
-    public static ItemLookup newInstance(String param1, String param2) {
-        ItemLookup fragment = new ItemLookup();
+    public static ItemDetails newInstance(String param1, String param2) {
+        ItemDetails fragment = new ItemDetails();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,7 +84,8 @@ public class ItemLookup extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mViewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+        mItemListViewModel = ViewModelProviders.of(getActivity()).get(ItemListViewModel.class);
+        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnitViewModel.class);
         setRetainInstance(true);
     }
 
@@ -87,14 +93,22 @@ public class ItemLookup extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_enter_item_details,
+        View view = inflater.inflate(R.layout.fragment_item_details,
                 container, false);
         unbinder = ButterKnife.bind(this,view);
 
         mStep1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AddUnitActivity)getActivity()).stepProgress(2);
+                String barcode = String.valueOf(Math.round(1+(Math.random()*Math.pow(10,12))));
+                List<ItemCategory> listOfCategories = new ArrayList<>();
+                listOfCategories.add(ItemCategory.OTHER);
+
+                Item item = new Item(barcode,mItemName.getText().toString(),listOfCategories);
+                mAddUnitViewModel.setItem(item);
+
+                ((AddUnitActivity)getActivity()).goToScanTag();
+
             }
         });
 
@@ -105,7 +119,7 @@ public class ItemLookup extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mItemName.setAdapter(new ArrayAdapter<Item>(getContext(),
-                android.R.layout.select_dialog_item,mViewModel.getListOfItem().getValue())
+                android.R.layout.select_dialog_item, mItemListViewModel.getListOfItem().getValue())
         );
         mItemName.setThreshold(3);
     }

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TrackIt Ez</string>
-
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -23,7 +22,4 @@
     <string name="fab_scan_tag_text">Scan Tag</string>
     <string name="fab_add_item_text">Add Item</string>
     <string name="fab_grocery_list_text">Grocery List</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

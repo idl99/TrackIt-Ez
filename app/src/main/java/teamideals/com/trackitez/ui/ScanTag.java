@@ -1,14 +1,19 @@
 package teamideals.com.trackitez.ui;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import teamideals.com.trackitez.R;
+import teamideals.com.trackitez.databinding.FragmentScanTagBinding;
+import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +34,7 @@ public class ScanTag extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private AddUnitViewModel mViewModel;
 
     public ScanTag() {
         // Required empty public constructor
@@ -59,13 +65,19 @@ public class ScanTag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mViewModel = ViewModelProviders.of(getActivity()).get(AddUnitViewModel.class);
+        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scan_tag, container, false);
+        // Inflate the layout for this fragments
+        FragmentScanTagBinding fragmentScanTagBinding = DataBindingUtil.inflate(
+                inflater,R.layout.fragment_scan_tag,container,false
+        );
+        fragmentScanTagBinding.setViewmodel(mViewModel);
+        return fragmentScanTagBinding.getRoot();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
