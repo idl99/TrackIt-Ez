@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -44,14 +47,19 @@ public class ItemDetails extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    ItemListViewModel mItemListViewModel;
-    AddUnitViewModel mAddUnitViewModel;
+    private ItemListViewModel mItemListViewModel;
+    private AddUnitViewModel mAddUnitViewModel;
 
     private Unbinder unbinder;
+
     @BindView(R.id.actv_item_name)
     AutoCompleteTextView mItemName;
     @BindView(R.id.multiAutoCompleteTextView)
     MultiAutoCompleteTextView mItemCategories;
+    @BindView(R.id.editText_quantity)
+    EditText mQuantity;
+    @BindView(R.id.editText_expiryDate)
+    EditText mExpiryDate;
     @BindView(R.id.step1Btn)
     Button mStep1Btn;
 
@@ -95,20 +103,12 @@ public class ItemDetails extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item_details,
                 container, false);
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
 
         mStep1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String barcode = String.valueOf(Math.round(1+(Math.random()*Math.pow(10,12))));
-                List<ItemCategory> listOfCategories = new ArrayList<>();
-                listOfCategories.add(ItemCategory.OTHER);
-
-                Item item = new Item(barcode,mItemName.getText().toString(),listOfCategories);
-                mAddUnitViewModel.setItem(item);
-
-                ((AddUnitActivity)getActivity()).goToScanTag();
-
+                processItemDetails();
             }
         });
 
@@ -163,6 +163,23 @@ public class ItemDetails extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void processItemDetails() {
+
+        // TODO : sort out barcode query & complete multiautocomplete for categories
+        String barcode = String.valueOf(Math.round(1 + (Math.random() * Math.pow(10, 12))));
+        List<ItemCategory> listOfCategories = new ArrayList<>();
+        listOfCategories.add(ItemCategory.OTHER);
+
+        Item item = new Item(barcode, mItemName.getText().toString(), listOfCategories);
+        mAddUnitViewModel.setItem(item);
+
+        mAddUnitViewModel.setExpiryDate(mExpiryDate.getEditableText().toString());
+        mAddUnitViewModel.initListOfUnits(
+                Integer.valueOf(mQuantity.getEditableText().toString()));
+
+        ((AddUnitActivity) getActivity()).goToScanTag();
     }
 
 }

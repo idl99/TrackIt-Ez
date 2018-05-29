@@ -1,37 +1,39 @@
 package teamideals.com.trackitez.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Unit implements DatastoreEntity {
 
     // Required Parameters
     private Item item;
-    private int unitId;
+    private String unitId;
     private UnitStatus status;
 
     // Optional Parameters
     private int nfcTagSerial;
-    private LocalDate expiryDate;
+    private Date expiryDate;
 
-    public Unit(Item item, int unitId, UnitStatus status) {
+    public Unit(Item item, String unitId, UnitStatus status) {
         this.item = item;
         this.unitId = unitId;
         this.status = status;
     }
 
-    public Unit(Item item, int unitId, UnitStatus status, int nfcTagSerial, LocalDate expiryDate) {
-        this.item = item;
-        this.unitId = unitId;
-        this.status = status;
-        this.nfcTagSerial = nfcTagSerial;
+    public Unit(Item item, String unitId, UnitStatus status, Date expiryDate) {
+        this(item,unitId,status);
         this.expiryDate = expiryDate;
+    }
+
+    public Unit(Item item, String unitId, UnitStatus status, int nfcTagSerial, Date expiryDate) {
+        this(item,unitId,status,expiryDate);
+        this.nfcTagSerial = nfcTagSerial;
     }
 
     public Item getItem() {
         return item;
     }
 
-    public int getUnitId() {
+    public String getUnitId() {
         return unitId;
     }
 
@@ -43,7 +45,7 @@ public class Unit implements DatastoreEntity {
         return nfcTagSerial;
     }
 
-    public LocalDate getExpiryDate() {
+    public Date getExpiryDate() {
         return expiryDate;
     }
 

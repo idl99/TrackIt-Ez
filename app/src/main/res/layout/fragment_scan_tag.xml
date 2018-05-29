@@ -2,23 +2,43 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <import type="teamideals.com.trackitez.viewmodels.AddUnitViewModel" />
-
         <variable
-            name="viewmodel"
-            type="teamideals.com.trackitez.viewmodels.AddUnitViewModel" />
+            name="itemName"
+            type="String" />
+        <variable
+            name="tagsScanned"
+            type="int" />
+        <variable
+            name="tagsToScan"
+            type="int" />
     </data>
 
-    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragmentScanTagView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.ScanTag">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{viewmodel.getItem().getItemName()}" />
-    </FrameLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemName}" />
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/circle_progress"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:progress="@{(tagsScanned*100)/tagsToScan}"/>
+
+        <Button
+            android:id="@+id/buttonScanTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEXT" />
+
+    </LinearLayout>
+
 </layout>
