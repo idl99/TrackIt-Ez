@@ -7,6 +7,10 @@
             name="itemName"
             type="String" />
         <variable
+            name="expiryDate"
+            type="String"
+            />
+        <variable
             name="tagsScanned"
             type="int" />
         <variable
@@ -14,31 +18,65 @@
             type="int" />
     </data>
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragmentScanTagView"
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.ScanTag">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/fragmentScanTagView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{itemName}" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".ui.ScanTag">
 
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:progressDrawable="@drawable/circle_progress"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:progress="@{(tagsScanned*100)/tagsToScan}"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="@{itemName}"
+                android:textAlignment="center"
+                android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/buttonScanTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NEXT" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"Expring on "+expiryDate}'
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:lines="2"
+                    android:text='@{String.valueOf(tagsScanned)+"/"+String.valueOf(tagsToScan)+"\nTags Scanned"}'
+                    android:textSize="22sp"
+                    android:textAlignment="center" />
+
+                <ProgressBar
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:layout_centerInParent="true"
+                    android:progress="@{(tagsScanned*100)/tagsToScan}"
+                    android:progressDrawable="@drawable/circle_progress" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/buttonScanTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEXT"/>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </layout>

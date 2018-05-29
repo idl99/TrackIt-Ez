@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.Observable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -90,7 +89,7 @@ public class ScanTag extends Fragment {
         fragmentScanTagBinding.setLifecycleOwner(this);
         fragmentScanTagBinding.setItemName(mViewModel.getItem().getItemName());
         fragmentScanTagBinding.setTagsToScan(mViewModel.getListOfUnits().size());
-
+        fragmentScanTagBinding.setExpiryDate(mViewModel.getExpiryDate());
 
         final Observer<Integer> tagsScannedObserver = new Observer<Integer>() {
             @Override

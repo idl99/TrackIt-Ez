@@ -67,6 +67,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -75,7 +76,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.3"
                     android:background="@drawable/green_border"
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
@@ -86,11 +87,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
                         android:text="QUANTITY" />
 
                     <EditText
                         android:id="@+id/editText_quantity"
+                        android:inputType="number"
+                        android:hint="Eg: 5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -111,10 +113,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="EXPIRY DATE" />
+                        android:text="Expiry Date" />
 
                     <EditText
                         android:id="@+id/editText_expiryDate"
+                        android:inputType="date"
+                        android:hint="DD/MM/YYYY"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -125,13 +129,11 @@
 
             <Button
                 android:id="@+id/step1Btn"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
+                android:layout_gravity="bottom|end"
                 android:layout_margin="10dp"
-                android:background="@drawable/green_border_with_fill"
-                android:text="NEXT"
-                android:textColor="#FFFFFF" />
+                android:text="NEXT" />
 
         </LinearLayout>
 

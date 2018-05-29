@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+
 import com.kofigyan.stateprogressbar.StateProgressBar;
+
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
 
@@ -19,7 +21,6 @@ public class AddUnitActivity extends FragmentActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_unit);
 
@@ -27,6 +28,17 @@ public class AddUnitActivity extends FragmentActivity
 
         mStaticProgressBar = findViewById(R.id.add_item_spb);
         initStateProgressBar();
+        switch (mViewModel.getCurrentProgressState()){
+            case 1:
+                mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+                break;
+            case 2:
+                mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
+                break;
+            case 3:
+                mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
+                break;
+        }
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -34,6 +46,7 @@ public class AddUnitActivity extends FragmentActivity
                 mFragmentManager.findFragmentByTag("Item_Detail_Fragment");
         Fragment scanTagFragment =
                 mFragmentManager.findFragmentByTag("Scan_Tag_Fragment");
+
 
         if(mViewModel.getCurrentProgressState()==1
                 && itemDetailFragment==null){
@@ -58,7 +71,7 @@ public class AddUnitActivity extends FragmentActivity
 
     public void goToItemDetails(){
         mFragmentManager.beginTransaction().replace(
-                R.id.fragmentView,(Fragment)
+                R.id.fragmentView,
                         new ItemDetails(),"" +
                         "Item_Detail_Fragment").commit();
     }
@@ -68,7 +81,7 @@ public class AddUnitActivity extends FragmentActivity
         mStaticProgressBar.enableAnimationToCurrentState(true);
         mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
         mFragmentManager.beginTransaction().replace(
-                R.id.fragmentView,(Fragment)
+                R.id.fragmentView,
                         new ScanTag(),"" +
                         "Scan_Tag_Fragment").commit();
     }
