@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -45,7 +47,6 @@ public class ScanTag extends Fragment {
     private AddUnitViewModel mViewModel;
 
     private Unbinder unbinder;
-
     @BindView(R.id.btn_ScanTagNext)
     Button mButtonNext;
 
@@ -110,7 +111,8 @@ public class ScanTag extends Fragment {
 
         new ScanTagAsyncTask(
                 mViewModel.getTagsScanned(),
-                mViewModel.getListOfUnits().size()
+                mViewModel.getListOfUnits().size(),
+                new WeakReference<Button>(mButtonNext)
         ).execute();
 
         return view;
@@ -156,17 +158,23 @@ public class ScanTag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public void enableNextButton(){
+        mButtonNext.setEnabled(true);
+    }
+
     private static class ScanTagAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private MutableLiveData<Integer> mlvTagsScanned;
-        private int tagsScanned;
-        private int tagsToBeScanned;
+        private int mTagsScanned;
+        private int mTagsToScan;
+        private WeakReference<Button> mBtnRef;
 
         private ScanTagAsyncTask(MutableLiveData<Integer> mlvTagsScanned,
-                                 int tagsToBeScanned){
+                                 int tagsToBeScanned, WeakReference<Button> mBtnRef){
             this.mlvTagsScanned = mlvTagsScanned;
-            this.tagsScanned = mlvTagsScanned.getValue();
-            this.tagsToBeScanned = tagsToBeScanned;
+            this.mTagsScanned = mlvTagsScanned.getValue();
+            this.mTagsToScan = tagsToBeScanned;
+            this.mBtnRef = mBtnRef;
         }
 
         @Override
@@ -176,11 +184,11 @@ public class ScanTag extends Fragment {
 
                 Thread.sleep(3500);
 
-                while (tagsScanned < tagsToBeScanned) {
+                while (mTagsScanned < mTagsToScan) {
                     mlvTagsScanned.postValue(
-                            ++tagsScanned
+                            ++mTagsScanned
                     );
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
                 }
 
             } catch (InterruptedException e) {
@@ -191,6 +199,11 @@ public class ScanTag extends Fragment {
 
         }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mBtnRef.get().setEnabled(true);
+        }
     }
 
 }
