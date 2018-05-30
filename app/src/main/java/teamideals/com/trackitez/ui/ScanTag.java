@@ -110,12 +110,6 @@ public class ScanTag extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        new ScanTagAsyncTask(
-                mViewModel.getTagsScanned(),
-                mViewModel.getNumberOfTagsToScan(),
-                new WeakReference<Button>(mButtonNext)
-        ).execute();
-
         return view;
     }
 
@@ -129,6 +123,14 @@ public class ScanTag extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mButtonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((AddUnitActivity)getActivity()).goToSummary();
+            }
+        });
+
         if(mViewModel.getTagsScanned().getValue()== mViewModel.getNumberOfTagsToScan()){
             mButtonNext.setEnabled(true);
         } else {
@@ -138,6 +140,7 @@ public class ScanTag extends Fragment {
                     new WeakReference<Button>(mButtonNext)
             ).execute();
         }
+
     }
 
     @Override

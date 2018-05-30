@@ -13,7 +13,9 @@ import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
 
 public class AddUnitActivity extends FragmentActivity
-        implements ItemDetails.OnFragmentInteractionListener, ScanTag.OnFragmentInteractionListener {
+        implements ItemDetails.OnFragmentInteractionListener,
+        ScanTag.OnFragmentInteractionListener,
+        FinishAddItem.OnFragmentInteractionListener{
 
     private StateProgressBar mStaticProgressBar;
     private FragmentManager mFragmentManager;
@@ -28,7 +30,7 @@ public class AddUnitActivity extends FragmentActivity
 
         mStaticProgressBar = findViewById(R.id.add_item_spb);
         initStateProgressBar();
-        switch (mViewModel.getCurrentProgressState()){
+        switch (mViewModel.getCurrentProgressState()) {
             case 1:
                 mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
                 break;
@@ -48,11 +50,11 @@ public class AddUnitActivity extends FragmentActivity
                 mFragmentManager.findFragmentByTag("Scan_Tag_Fragment");
 
 
-        if(mViewModel.getCurrentProgressState()==1
-                && itemDetailFragment==null){
+        if (mViewModel.getCurrentProgressState() == 1
+                && itemDetailFragment == null) {
             goToItemDetails();
-        } else if(mViewModel.getCurrentProgressState()==2
-                && scanTagFragment==null){
+        } else if (mViewModel.getCurrentProgressState() == 2
+                && scanTagFragment == null) {
             goToScanTag();
         }
 
@@ -63,26 +65,37 @@ public class AddUnitActivity extends FragmentActivity
 
     }
 
-    public void initStateProgressBar(){
+    public void initStateProgressBar() {
         mStaticProgressBar.setStateDescriptionData(
-                new String[]{"Item\nDetails","Scan\nTags","Finish\n"}
+                new String[]{"Item\nDetails", "Scan\nTags", "Finish\n"}
         );
     }
 
-    public void goToItemDetails(){
+    public void goToItemDetails() {
         mFragmentManager.beginTransaction().replace(
                 R.id.fragmentView,
-                        new ItemDetails(),"" +
+                new ItemDetails(), "" +
                         "Item_Detail_Fragment").commit();
     }
 
-    public void goToScanTag(){
+    public void goToScanTag() {
         mViewModel.setCurrentProgressState(2);
         mStaticProgressBar.enableAnimationToCurrentState(true);
         mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
         mFragmentManager.beginTransaction().replace(
                 R.id.fragmentView,
-                        new ScanTag(),"" +
+                new ScanTag(), "" +
                         "Scan_Tag_Fragment").commit();
     }
+
+    public void goToSummary() {
+        mViewModel.setCurrentProgressState(3);
+        mStaticProgressBar.enableAnimationToCurrentState(true);
+        mStaticProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
+        mFragmentManager.beginTransaction().replace(
+                R.id.fragmentView,
+                new FinishAddItem(), "" +
+                        "FinishAddItem").commit();
+    }
+
 }
