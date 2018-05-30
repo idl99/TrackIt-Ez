@@ -102,4 +102,8 @@ public class AddUnitViewModel extends ViewModel {
         }
     }
 
+    public int getNumberOfTagsToScan(){
+        return getListOfUnits().size();
+    }
+
 }
