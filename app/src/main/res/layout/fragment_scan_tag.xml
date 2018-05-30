@@ -69,6 +69,7 @@
         </RelativeLayout>
 
         <Button
+            android:enabled="false"
             android:id="@+id/btn_ScanTagNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
