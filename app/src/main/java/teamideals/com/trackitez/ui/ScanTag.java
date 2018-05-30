@@ -1,10 +1,12 @@
 package teamideals.com.trackitez.ui;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -43,8 +46,8 @@ public class ScanTag extends Fragment {
 
     private Unbinder unbinder;
 
-    @BindView(R.id.buttonScanTag)
-    Button mIncrementTagsScanned;
+    @BindView(R.id.btn_ScanTagNext)
+    Button mButtonNext;
 
     public ScanTag() {
         // Required empty public constructor
@@ -84,7 +87,7 @@ public class ScanTag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragments
         FragmentScanTagBinding fragmentScanTagBinding = DataBindingUtil.inflate(
-                inflater,R.layout.fragment_scan_tag,container,false
+                inflater, R.layout.fragment_scan_tag, container, false
         );
         fragmentScanTagBinding.setLifecycleOwner(this);
         fragmentScanTagBinding.setItemName(mViewModel.getItem().getItemName());
@@ -94,23 +97,21 @@ public class ScanTag extends Fragment {
         final Observer<Integer> tagsScannedObserver = new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                Log.d("My_Log","NUMBER OF TAGS SCANNED: "+integer);
+                Log.d("My_Log", "NUMBER OF TAGS SCANNED: " + integer);
                 fragmentScanTagBinding.setTagsScanned(integer);
             }
         };
 
-        mViewModel.getTagsScanned().observe(this,tagsScannedObserver);
+        mViewModel.getTagsScanned().observe(this, tagsScannedObserver);
 
         View view = fragmentScanTagBinding.getRoot();
 
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
 
-        mIncrementTagsScanned.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.incrementTagsScanned();
-            }
-        });
+        new ScanTagAsyncTask(
+                mViewModel.getTagsScanned(),
+                mViewModel.getListOfUnits().size()
+        ).execute();
 
         return view;
     }
@@ -154,4 +155,42 @@ public class ScanTag extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private static class ScanTagAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private MutableLiveData<Integer> mlvTagsScanned;
+        private int tagsScanned;
+        private int tagsToBeScanned;
+
+        private ScanTagAsyncTask(MutableLiveData<Integer> mlvTagsScanned,
+                                 int tagsToBeScanned){
+            this.mlvTagsScanned = mlvTagsScanned;
+            this.tagsScanned = mlvTagsScanned.getValue();
+            this.tagsToBeScanned = tagsToBeScanned;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+
+                Thread.sleep(3500);
+
+                while (tagsScanned < tagsToBeScanned) {
+                    mlvTagsScanned.postValue(
+                            ++tagsScanned
+                    );
+                    Thread.sleep(1500);
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
+
+    }
+
 }
