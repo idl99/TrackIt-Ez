@@ -1,6 +1,8 @@
 package teamideals.com.trackitez.ui;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import teamideals.com.trackitez.R;
+import teamideals.com.trackitez.databinding.FragmentFinishAddItemBinding;
+import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,7 @@ public class FinishAddItem extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private AddUnitViewModel mAddUnitViewModel;
 
     public FinishAddItem() {
         // Required empty public constructor
@@ -59,13 +64,29 @@ public class FinishAddItem extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnitViewModel.class);
+        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_finish_add_item, container, false);
+        FragmentFinishAddItemBinding binding = DataBindingUtil.inflate(
+                getLayoutInflater(),
+                R.layout.fragment_finish_add_item,
+                container, false
+        );
+
+        binding.setLifecycleOwner(this);
+        binding.setItemName(mAddUnitViewModel.getItem().getItemName());
+        binding.setQuantity(mAddUnitViewModel.getQuantity());
+        binding.setExpiryDate(mAddUnitViewModel.getExpiryDate());
+
+        View view = binding.getRoot();
+
+        return view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
