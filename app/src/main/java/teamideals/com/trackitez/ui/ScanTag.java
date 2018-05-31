@@ -91,6 +91,7 @@ public class ScanTag extends Fragment {
         FragmentScanTagBinding fragmentScanTagBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_scan_tag, container, false
         );
+
         fragmentScanTagBinding.setLifecycleOwner(this);
         fragmentScanTagBinding.setItemName(mViewModel.getItem().getItemName());
         fragmentScanTagBinding.setTagsToScan(mViewModel.getListOfUnits().size());
@@ -127,16 +128,17 @@ public class ScanTag extends Fragment {
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mViewModel.writeUnits();
                 ((AddUnitActivity)getActivity()).goToSummary();
             }
         });
 
-        if(mViewModel.getTagsScanned().getValue()== mViewModel.getNumberOfTagsToScan()){
+        if(mViewModel.getTagsScanned().getValue()== mViewModel.getQuantity()){
             mButtonNext.setEnabled(true);
         } else {
             new ScanTagAsyncTask(
                     mViewModel.getTagsScanned(),
-                    mViewModel.getNumberOfTagsToScan(),
+                    mViewModel.getQuantity(),
                     new WeakReference<Button>(mButtonNext)
             ).execute();
         }

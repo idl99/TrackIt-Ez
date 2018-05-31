@@ -1,6 +1,5 @@
 package teamideals.com.trackitez.viewmodels;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
@@ -102,8 +101,14 @@ public class AddUnitViewModel extends ViewModel {
         }
     }
 
-    public int getNumberOfTagsToScan(){
+    public int getQuantity(){
         return getListOfUnits().size();
+    }
+
+    public void writeUnits(){
+        unitDatastore.addAll(
+            listOfUnits.getValue()
+        );
     }
 
 }
