@@ -2,6 +2,8 @@ package teamideals.com.trackitez.datastores;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.List;
+
 import teamideals.com.trackitez.entities.Item;
 
 public class ItemDatastore implements Datastore<Item> {
@@ -19,6 +21,11 @@ public class ItemDatastore implements Datastore<Item> {
 
     @Override
     public void add(Item item) {
+
+    }
+
+    @Override
+    public void addAll(List<Item> itemList) {
 
     }
 
