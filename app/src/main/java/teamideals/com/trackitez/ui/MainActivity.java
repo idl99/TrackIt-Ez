@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -14,19 +15,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import teamideals.com.trackitez.entities.Item;
-import teamideals.com.trackitez.viewmodels.ItemListViewModel;
 import teamideals.com.trackitez.R;
+import teamideals.com.trackitez.viewmodels.ItemSummary;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,8 +37,8 @@ public class MainActivity extends AppCompatActivity
     private Unbinder binder;
 
     // UI elements
-    @BindView(R.id.listView_itemList)
-    ListView mItemListView;
+    @BindView(R.id.listview_unit_list)
+    ListView mUnitListView;
 
     @BindViews({R.id.fab_scan_tag, R.id.fab_add_item, R.id.fab_grocery_list})
     List<LinearLayout> mFabMenu;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton mFabBtn;
 
     // ViewModels
-    ItemListViewModel mItemListViewModel; // View model for item entry
+    ItemSummary mItemSummary; // View model for item entry
 
     boolean isFABOpen;
 
@@ -56,13 +59,13 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         // Attaching view model to this instance of MainActivity
-        mItemListViewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
+        mItemSummary = ViewModelProviders.of(this).get(ItemSummary.class);
 
         Unbinder binder = ButterKnife.bind(this);
 
-        List<Item> itemList = mItemListViewModel.getListOfItem().getValue();
+        List<ItemSummary.ItemUnit> itemUnitList = mItemSummary.getListOfItemUnit().getValue();
 
-        mFabMenu.get(0).setOnClickListener(new View.OnClickListener() {
+        mFabMenu.get(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),AddUnitActivity.class);
@@ -90,18 +93,36 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mItemListView.setAdapter(
-                new ArrayAdapter<Item>(
+        mUnitListView.setAdapter(
+                new ArrayAdapter<ItemSummary.ItemUnit>(
                         getApplicationContext(),
-                        android.R.layout.simple_list_item_1,
-                        android.R.id.text1,
-                        itemList));
-
-        mItemListViewModel.getListOfItem().observe(
-                this, new Observer<List<Item>>() {
+                        R.layout.unit_view,
+                        R.id.itemName,
+                        itemUnitList){
+                    @NonNull
                     @Override
-                    public void onChanged(@Nullable List<Item> items) {
-                        ((BaseAdapter) mItemListView.getAdapter()).notifyDataSetChanged();
+                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                        View view  = super.getView(position, convertView, parent);
+
+                        TextView itemName = view.findViewById(R.id.itemName);
+                        itemName.setText(itemUnitList.get(position).getItemName());
+
+                        TextView qty = view.findViewById(R.id.Quantity);
+                        qty.setText(String.valueOf(itemUnitList.get(position).getQuantity()));
+
+                        TextView noOfDays = view.findViewById(R.id.noOfDays);
+                        noOfDays.setText(String.valueOf(
+                                itemUnitList.get(position).getDaysToExpiry())+"d");
+
+                        return view;
+                    }
+                });
+
+        mItemSummary.getListOfItemUnit().observe(
+                this, new Observer<List<ItemSummary.ItemUnit>>() {
+                    @Override
+                    public void onChanged(@Nullable List<ItemSummary.ItemUnit> units) {
+                        ((BaseAdapter) mUnitListView.getAdapter()).notifyDataSetChanged();
                     }
                 }
         );

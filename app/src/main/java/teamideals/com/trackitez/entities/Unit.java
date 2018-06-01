@@ -13,6 +13,10 @@ public class Unit implements DatastoreEntity {
     private int nfcTagSerial;
     private Date expiryDate;
 
+    public Unit(){
+
+    }
+
     public Unit(Item item, String unitId, UnitStatus status) {
         this.item = item;
         this.unitId = unitId;
