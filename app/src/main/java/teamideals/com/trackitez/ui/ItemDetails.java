@@ -24,8 +24,8 @@ import butterknife.Unbinder;
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.entities.Item;
 import teamideals.com.trackitez.entities.ItemCategory;
-import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
-import teamideals.com.trackitez.viewmodels.ItemListViewModel;
+import teamideals.com.trackitez.viewmodels.AddUnit;
+import teamideals.com.trackitez.viewmodels.ItemList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,8 +47,8 @@ public class ItemDetails extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private ItemListViewModel mItemListViewModel;
-    private AddUnitViewModel mAddUnitViewModel;
+    private ItemList mItemListViewModel;
+    private AddUnit mAddUnitViewModel;
 
     private Unbinder unbinder;
 
@@ -92,8 +92,8 @@ public class ItemDetails extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mItemListViewModel = ViewModelProviders.of(getActivity()).get(ItemListViewModel.class);
-        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnitViewModel.class);
+        mItemListViewModel = ViewModelProviders.of(getActivity()).get(ItemList.class);
+        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnit.class);
         setRetainInstance(true);
     }
 

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.databinding.FragmentScanTagBinding;
-import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
+import teamideals.com.trackitez.viewmodels.AddUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +45,7 @@ public class ScanTag extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private AddUnitViewModel mViewModel;
+    private AddUnit mAddUnitViewModel;
 
     private Unbinder unbinder;
     @BindView(R.id.btn_ScanTagNext)
@@ -80,7 +80,7 @@ public class ScanTag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mViewModel = ViewModelProviders.of(getActivity()).get(AddUnitViewModel.class);
+        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnit.class);
         setRetainInstance(true);
     }
 
@@ -93,9 +93,9 @@ public class ScanTag extends Fragment {
         );
 
         fragmentScanTagBinding.setLifecycleOwner(this);
-        fragmentScanTagBinding.setItemName(mViewModel.getItem().getItemName());
-        fragmentScanTagBinding.setTagsToScan(mViewModel.getListOfUnits().size());
-        fragmentScanTagBinding.setExpiryDate(mViewModel.getExpiryDate());
+        fragmentScanTagBinding.setItemName(mAddUnitViewModel.getItem().getItemName());
+        fragmentScanTagBinding.setTagsToScan(mAddUnitViewModel.getListOfUnits().size());
+        fragmentScanTagBinding.setExpiryDate(mAddUnitViewModel.getExpiryDate());
 
         final Observer<Integer> tagsScannedObserver = new Observer<Integer>() {
             @Override
@@ -105,7 +105,7 @@ public class ScanTag extends Fragment {
             }
         };
 
-        mViewModel.getTagsScanned().observe(this, tagsScannedObserver);
+        mAddUnitViewModel.getTagsScanned().observe(this, tagsScannedObserver);
 
         View view = fragmentScanTagBinding.getRoot();
 
@@ -128,17 +128,17 @@ public class ScanTag extends Fragment {
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.writeUnits();
+                mAddUnitViewModel.writeUnits();
                 ((AddUnitActivity)getActivity()).goToSummary();
             }
         });
 
-        if(mViewModel.getTagsScanned().getValue()== mViewModel.getQuantity()){
+        if(mAddUnitViewModel.getTagsScanned().getValue()== mAddUnitViewModel.getQuantity()){
             mButtonNext.setEnabled(true);
         } else {
             new ScanTagAsyncTask(
-                    mViewModel.getTagsScanned(),
-                    mViewModel.getQuantity(),
+                    mAddUnitViewModel.getTagsScanned(),
+                    mAddUnitViewModel.getQuantity(),
                     new WeakReference<Button>(mButtonNext)
             ).execute();
         }

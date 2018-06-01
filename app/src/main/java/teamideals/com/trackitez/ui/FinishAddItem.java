@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.databinding.FragmentFinishAddItemBinding;
-import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
+import teamideals.com.trackitez.viewmodels.AddUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +33,7 @@ public class FinishAddItem extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private AddUnitViewModel mAddUnitViewModel;
+    private AddUnit mAddUnitViewModel;
 
     public FinishAddItem() {
         // Required empty public constructor
@@ -64,7 +64,7 @@ public class FinishAddItem extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnitViewModel.class);
+        mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnit.class);
         setRetainInstance(true);
     }
 

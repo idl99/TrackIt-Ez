@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import teamideals.com.trackitez.R;
-import teamideals.com.trackitez.viewmodels.AddUnitViewModel;
+import teamideals.com.trackitez.viewmodels.AddUnit;
 
 public class AddUnitActivity extends FragmentActivity
         implements ItemDetails.OnFragmentInteractionListener,
@@ -19,14 +19,14 @@ public class AddUnitActivity extends FragmentActivity
 
     private StateProgressBar mStaticProgressBar;
     private FragmentManager mFragmentManager;
-    private AddUnitViewModel mViewModel;
+    private AddUnit mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_unit);
 
-        mViewModel = ViewModelProviders.of(this).get(AddUnitViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(AddUnit.class);
 
         mStaticProgressBar = findViewById(R.id.add_item_spb);
         initStateProgressBar();

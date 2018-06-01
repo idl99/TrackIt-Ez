@@ -16,7 +16,7 @@ import teamideals.com.trackitez.entities.Item;
 import teamideals.com.trackitez.entities.Unit;
 import teamideals.com.trackitez.entities.UnitStatus;
 
-public class AddUnitViewModel extends ViewModel {
+public class AddUnit extends ViewModel {
 
     // Reference to relevant datastores
     private ItemDatastore itemDatastore = ItemDatastore.getInstance();
@@ -30,7 +30,7 @@ public class AddUnitViewModel extends ViewModel {
     private int currentProgressState;
     private MutableLiveData<Integer> tagsScanned;
 
-    public AddUnitViewModel() {
+    public AddUnit() {
         item = new MutableLiveData<>();
         item.setValue(new Item());
         listOfUnits = new MutableLiveData<>();

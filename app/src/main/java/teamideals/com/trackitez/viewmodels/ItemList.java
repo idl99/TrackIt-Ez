@@ -10,13 +10,13 @@ import java.util.List;
 import teamideals.com.trackitez.datastores.ItemDatastore;
 import teamideals.com.trackitez.entities.Item;
 
-public class ItemListViewModel extends ViewModel{
+public class ItemList extends ViewModel{
 
     private final ItemDatastore itemDatastore = ItemDatastore.getInstance();
 
     private MutableLiveData<List<Item>> mListOfItem;
 
-    public ItemListViewModel(){
+    public ItemList(){
         itemDatastore.getRef().addChildEventListener(
                 new ChildEventListener() {
                     @Override
