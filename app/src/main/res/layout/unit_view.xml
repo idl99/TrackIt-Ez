@@ -25,10 +25,11 @@
             android:src="@drawable/circle_expiry_indicator" />
 
         <TextView
+            android:id="@+id/noOfDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="7d"
+            android:text=""
             android:textSize="18sp" />
 
     </RelativeLayout>
@@ -46,17 +47,19 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Anchor Milk Packet"
+            android:text=""
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/Quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="10 Units"
+            android:text=""
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -69,6 +72,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="29dp"
-        android:background="@drawable/trash_can"
-        android:contentDescription="trash_button" />
+        android:background="@drawable/trash_can" />
+
 </RelativeLayout>
