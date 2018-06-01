@@ -13,13 +13,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import teamideals.com.trackitez.entities.Item;
 import teamideals.com.trackitez.viewmodels.ItemListViewModel;
 import teamideals.com.trackitez.R;
@@ -27,16 +31,22 @@ import teamideals.com.trackitez.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Unbinder binder;
+
     // UI elements
-    private ListView mItemListView;
-    FloatingActionButton mFabExpandMenu;
-    LinearLayout mFabScanTag;
-    LinearLayout mFabAddItem;
-    LinearLayout mFabGroceryList;
-    boolean isFABOpen;
+    @BindView(R.id.listView_itemList)
+    ListView mItemListView;
+
+    @BindViews({R.id.fab_scan_tag, R.id.fab_add_item, R.id.fab_grocery_list})
+    List<LinearLayout> mFabMenu;
+
+    @BindView(R.id.fab_menu_btn)
+    FloatingActionButton mFabBtn;
 
     // ViewModels
-    private ItemListViewModel mItemListViewModel; // View model for item entry
+    ItemListViewModel mItemListViewModel; // View model for item entry
+
+    boolean isFABOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +58,11 @@ public class MainActivity extends AppCompatActivity
         // Attaching view model to this instance of MainActivity
         mItemListViewModel = ViewModelProviders.of(this).get(ItemListViewModel.class);
 
-        mItemListView = (ListView) findViewById(R.id.listView_itemList);
+        Unbinder binder = ButterKnife.bind(this);
+
         List<Item> itemList = mItemListViewModel.getListOfItem().getValue();
 
-        mFabExpandMenu = (FloatingActionButton) findViewById(R.id.fab_expand_menu);
-
-        mFabScanTag = (LinearLayout) findViewById(R.id.fab_scan_tag);
-
-        mFabAddItem = (LinearLayout) findViewById(R.id.fab_add_item);
-        mFabAddItem.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+        mFabMenu.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),AddUnitActivity.class);
@@ -64,9 +70,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mFabGroceryList = (LinearLayout) findViewById(R.id.fab_grocery_list);
-
-        mFabExpandMenu.setOnClickListener(new View.OnClickListener() {
+        mFabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!isFABOpen){
@@ -166,17 +170,17 @@ public class MainActivity extends AppCompatActivity
     private void showFABMenu(){
 
         isFABOpen=true;
-        mFabExpandMenu.setImageDrawable(getResources().
+
+        mFabBtn.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
 
-        mFabScanTag.setTranslationY(-getResources().getDimension(R.dimen.standard_55));
-        mFabScanTag.getChildAt(0).setVisibility(View.VISIBLE);
-
-        mFabAddItem.setTranslationY(-getResources().getDimension(R.dimen.standard_105));
-        mFabAddItem.getChildAt(0).setVisibility(View.VISIBLE);
-
-        mFabGroceryList.setTranslationY(-getResources().getDimension(R.dimen.standard_155));
-        mFabGroceryList.getChildAt(0).setVisibility(View.VISIBLE);
+        for(int i=0; i<mFabMenu.size();i++){
+            LinearLayout fabOption = mFabMenu.get(i);
+            fabOption.getChildAt(0).setVisibility(View.VISIBLE);
+            fabOption.setTranslationY(
+                    (-75-(70*i)) * this.getResources().getDisplayMetrics().density
+            );
+        }
 
     }
 
@@ -186,17 +190,15 @@ public class MainActivity extends AppCompatActivity
     private void closeFABMenu(){
 
         isFABOpen=false;
-        mFabExpandMenu.setImageDrawable(getResources().
+
+        mFabBtn.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
 
-        mFabScanTag.setTranslationY(0);
-        mFabScanTag.getChildAt(0).setVisibility(View.INVISIBLE);
-
-        mFabAddItem.setTranslationY(0);
-        mFabAddItem.getChildAt(0).setVisibility(View.INVISIBLE);
-
-        mFabGroceryList.setTranslationY(0);
-        mFabGroceryList.getChildAt(0).setVisibility(View.INVISIBLE);
+        for(int i=0; i<mFabMenu.size();){
+            LinearLayout fabOption = mFabMenu.get(i++);
+            fabOption.getChildAt(0).setVisibility(View.INVISIBLE);
+            fabOption.setTranslationY(0);
+        }
 
     }
 
