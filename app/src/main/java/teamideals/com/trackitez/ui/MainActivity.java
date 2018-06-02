@@ -104,7 +104,10 @@ public class MainActivity extends AppCompatActivity
                         itemName.setText(itemUnitList.get(position).getItemName());
 
                         TextView qty = view.findViewById(R.id.Quantity);
-                        qty.setText(String.valueOf(itemUnitList.get(position).getQuantity()));
+                        qty.setText(
+                                String.format((getResources().getString(R.string.no_of_units)),
+                                itemUnitList.get(0).getQuantity())
+                        );
 
                         TextView noOfDays = view.findViewById(R.id.noOfDays);
                         noOfDays.setText(itemUnitList.get(position).getExpiryPeriod());

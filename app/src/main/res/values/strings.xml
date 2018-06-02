@@ -22,4 +22,5 @@
     <string name="fab_scan_tag_text">Scan Tag</string>
     <string name="fab_add_item_text">Add Item</string>
     <string name="fab_grocery_list_text">Grocery List</string>
+    <string name="no_of_units">%d Unit/s Available</string>
 </resources>
