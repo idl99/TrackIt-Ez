@@ -11,18 +11,16 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:drawable="@drawable/circle_expiry_indicator">
+        android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/circleExpiryIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_centerInParent="true"
-            android:contentDescription="expiry_circle"
-            android:src="@drawable/circle_expiry_indicator" />
+            android:src="@drawable/expiry_indicator" />
 
         <TextView
             android:id="@+id/noOfDays"

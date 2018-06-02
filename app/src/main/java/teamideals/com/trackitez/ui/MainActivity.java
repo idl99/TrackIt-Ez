@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,22 +35,17 @@ import teamideals.com.trackitez.viewmodels.ItemSummary;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Unbinder binder;
-
     // UI elements
     @BindView(R.id.listview_unit_list)
     ListView mUnitListView;
-
     @BindViews({R.id.fab_scan_tag, R.id.fab_add_item, R.id.fab_grocery_list})
     List<LinearLayout> mFabMenu;
-
     @BindView(R.id.fab_menu_btn)
     FloatingActionButton mFabBtn;
-
     // ViewModels
     ItemSummary mItemSummary; // View model for item entry
-
     boolean isFABOpen;
+    private Unbinder binder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         mFabMenu.get(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),AddUnitActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddUnitActivity.class);
                 getApplicationContext().startActivity(intent);
             }
         });
@@ -76,9 +72,9 @@ public class MainActivity extends AppCompatActivity
         mFabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isFABOpen){
+                if (!isFABOpen) {
                     showFABMenu();
-                }else{
+                } else {
                     closeFABMenu();
                 }
             }
@@ -98,11 +94,11 @@ public class MainActivity extends AppCompatActivity
                         getApplicationContext(),
                         R.layout.unit_view,
                         R.id.itemName,
-                        itemUnitList){
+                        itemUnitList) {
                     @NonNull
                     @Override
                     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                        View view  = super.getView(position, convertView, parent);
+                        View view = super.getView(position, convertView, parent);
 
                         TextView itemName = view.findViewById(R.id.itemName);
                         itemName.setText(itemUnitList.get(position).getItemName());
@@ -111,8 +107,10 @@ public class MainActivity extends AppCompatActivity
                         qty.setText(String.valueOf(itemUnitList.get(position).getQuantity()));
 
                         TextView noOfDays = view.findViewById(R.id.noOfDays);
-                        noOfDays.setText(String.valueOf(
-                                itemUnitList.get(position).getDaysToExpiry())+"d");
+                        noOfDays.setText(itemUnitList.get(position).getExpiryPeriod());
+
+                        ImageView imageView = view.findViewById(R.id.circleExpiryIndicator);
+                        setCeiLevel(imageView,itemUnitList.get(position).getExpiryPeriod());
 
                         return view;
                     }
@@ -126,6 +124,30 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
         );
+
+    }
+
+    private void setCeiLevel(ImageView imageView, String expiryPeriod) {
+
+        Integer noOfDays = null;
+        if (expiryPeriod.contains("d")) {
+            String string = expiryPeriod.
+                    replaceAll("[a-z]", "");
+            noOfDays = Integer.valueOf(string);
+        }
+
+        if(noOfDays == null){
+            imageView.setImageDrawable(getResources()
+                    .getDrawable(R.drawable.expiry_indicator));
+        } else {
+            if(noOfDays<=3){
+                imageView.setImageDrawable(getResources()
+                        .getDrawable(R.drawable.danger_expiry_indicator));
+            } else if(noOfDays<=7){
+                imageView.setImageDrawable(getResources()
+                        .getDrawable(R.drawable.warning_expiry_indicator));
+            }
+        }
 
     }
 
@@ -188,18 +210,18 @@ public class MainActivity extends AppCompatActivity
     /**
      * Method which expands the FAB menu
      */
-    private void showFABMenu(){
+    private void showFABMenu() {
 
-        isFABOpen=true;
+        isFABOpen = true;
 
         mFabBtn.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_down_white_24dp));
 
-        for(int i=0; i<mFabMenu.size();i++){
+        for (int i = 0; i < mFabMenu.size(); i++) {
             LinearLayout fabOption = mFabMenu.get(i);
             fabOption.getChildAt(0).setVisibility(View.VISIBLE);
             fabOption.setTranslationY(
-                    (-75-(70*i)) * this.getResources().getDisplayMetrics().density
+                    (-75 - (70 * i)) * this.getResources().getDisplayMetrics().density
             );
         }
 
@@ -208,14 +230,14 @@ public class MainActivity extends AppCompatActivity
     /**
      * Method which collapses the FAB menu
      */
-    private void closeFABMenu(){
+    private void closeFABMenu() {
 
-        isFABOpen=false;
+        isFABOpen = false;
 
         mFabBtn.setImageDrawable(getResources().
                 getDrawable(R.drawable.ic_keyboard_arrow_up_white_24dp));
 
-        for(int i=0; i<mFabMenu.size();){
+        for (int i = 0; i < mFabMenu.size(); ) {
             LinearLayout fabOption = mFabMenu.get(i++);
             fabOption.getChildAt(0).setVisibility(View.INVISIBLE);
             fabOption.setTranslationY(0);

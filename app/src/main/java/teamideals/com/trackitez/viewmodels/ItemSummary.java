@@ -21,13 +21,10 @@ public class ItemSummary extends ViewModel {
 
     private UnitDatastore unitDatastore = UnitDatastore.getInstance();
 
-    private MutableLiveData<List<ItemUnit>> mListOfItemUnit;
+    private MutableLiveData<List<ItemUnit>> mListOfItemUnit = new MutableLiveData<>();
 
     public ItemSummary(){
-
-        mListOfItemUnit = new MutableLiveData<>();
         mListOfItemUnit.setValue(new ArrayList<ItemUnit>());
-
         unitDatastore.getRef().child(String.valueOf(UnitStatus.IN_STORAGE)).addChildEventListener(
                 new ChildEventListener() {
                     @Override
@@ -37,7 +34,6 @@ public class ItemSummary extends ViewModel {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
                     }
 
                     @Override
@@ -46,18 +42,13 @@ public class ItemSummary extends ViewModel {
 
                     @Override
                     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
-
                 }
-
         );
-
     }
 
     public MutableLiveData<List<ItemUnit>> getListOfItemUnit() {
@@ -75,32 +66,47 @@ public class ItemSummary extends ViewModel {
         String itemName = null;
         long maxDayDiff = 0;
         while(unitIterable.iterator().hasNext()){
+
             Unit unit = ((DataSnapshot)unitIterable.iterator().next())
                     .getValue(Unit.class);
-            if(itemName == null)
-                itemName = unit.getItem().getItemName();
+
+            if(itemName == null) itemName = unit.getItem().getItemName();
+
             Date expiryDate = unit.getExpiryDate();
+
             long dayDiff = (expiryDate.getTime() - System.currentTimeMillis())/(1000*60*60*24);
-            if(dayDiff>maxDayDiff)
-                maxDayDiff = dayDiff;
+
+            if(dayDiff>maxDayDiff) maxDayDiff = dayDiff;
         }
 
-        ItemUnit itemUnit = new ItemUnit(itemName,qty,maxDayDiff);
+        String expiryPeriod = generateExpiryPeriod(maxDayDiff);
+
+        ItemUnit itemUnit = new ItemUnit(itemName,qty,expiryPeriod);
         List<ItemUnit> temp = mListOfItemUnit.getValue();
         temp.add(itemUnit);
         mListOfItemUnit.setValue(temp);
+
+    }
+
+    private String generateExpiryPeriod(long dayDiff){
+        if(dayDiff>90){
+            return (dayDiff/30)+"m";
+        } else if(dayDiff>14){
+            return (dayDiff/7)+"w";
+        } else
+            return dayDiff+"d";
     }
 
     public final class ItemUnit{
 
         private String itemName;
         private long quantity;
-        private long daysToExpiry;
+        private String expiryPeriod;
 
-        private ItemUnit(String itemName, long quantity, long daysToExpiry){
+        private ItemUnit(String itemName, long quantity, String daysToExpiry){
             this.itemName = itemName;
             this.quantity = quantity;
-            this.daysToExpiry = daysToExpiry;
+            this.expiryPeriod = daysToExpiry;
         }
 
         public String getItemName(){
@@ -111,8 +117,8 @@ public class ItemSummary extends ViewModel {
             return this.quantity;
         }
 
-        public long getDaysToExpiry(){
-            return this.daysToExpiry;
+        public String getExpiryPeriod(){
+            return this.expiryPeriod;
         }
 
     }
