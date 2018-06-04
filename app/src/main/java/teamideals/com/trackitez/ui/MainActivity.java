@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -100,20 +101,27 @@ public class MainActivity extends AppCompatActivity
                     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);
 
-                        TextView itemName = view.findViewById(R.id.itemName);
-                        itemName.setText(itemUnitList.get(position).getItemName());
+                        ItemSummary.ItemUnit itemUnit = itemUnitList.get(position);
+                        String itemName = itemUnit.getItemName();
+                        long quantity = itemUnit.getQuantity();
+                        long daysToExpiry = itemUnit.getExpiryinDays();
 
-                        TextView qty = view.findViewById(R.id.Quantity);
-                        qty.setText(
+
+                        TextView tvItemName = view.findViewById(R.id.itemName);
+                        tvItemName.setText(itemName);
+
+                        TextView tvQuantity = view.findViewById(R.id.Quantity);
+                        tvQuantity.setText(
                                 String.format((getResources().getString(R.string.no_of_units)),
-                                itemUnitList.get(0).getQuantity())
-                        );
+                                quantity
+                        ));
 
-                        TextView noOfDays = view.findViewById(R.id.noOfDays);
-                        noOfDays.setText(itemUnitList.get(position).getExpiryPeriod());
+                        TextView tvDaysToExpiry = view.findViewById(R.id.noOfDays);
+                        String expiryTag = expiryTag(daysToExpiry);
+                        tvDaysToExpiry.setText(expiryTag);
 
                         ImageView imageView = view.findViewById(R.id.circleExpiryIndicator);
-                        setCeiLevel(imageView,itemUnitList.get(position).getExpiryPeriod());
+                        setCeiLevel(imageView, daysToExpiry);
 
                         return view;
                     }
@@ -123,33 +131,33 @@ public class MainActivity extends AppCompatActivity
                 this, new Observer<List<ItemSummary.ItemUnit>>() {
                     @Override
                     public void onChanged(@Nullable List<ItemSummary.ItemUnit> units) {
+                        Collections.sort(units);
                         ((BaseAdapter) mUnitListView.getAdapter()).notifyDataSetChanged();
                     }
                 }
         );
-
     }
 
-    private void setCeiLevel(ImageView imageView, String expiryPeriod) {
+    private String expiryTag(long expiryInDays){
+        if(expiryInDays>90){
+            return (expiryInDays/30)+"m";
+        } else if(expiryInDays>14){
+            return (expiryInDays/7)+"w";
+        } else
+            return expiryInDays+"d";
+    }
 
-        Integer noOfDays = null;
-        if (expiryPeriod.contains("d")) {
-            String string = expiryPeriod.
-                    replaceAll("[a-z]", "");
-            noOfDays = Integer.valueOf(string);
-        }
+    private void setCeiLevel(ImageView imageView, long daysToExpiry) {
 
-        if(noOfDays == null){
+        if(daysToExpiry<=3){
+            imageView.setImageDrawable(getResources()
+                    .getDrawable(R.drawable.danger_expiry_indicator));
+        } else if(daysToExpiry<=7){
+            imageView.setImageDrawable(getResources()
+                    .getDrawable(R.drawable.warning_expiry_indicator));
+        } else if(daysToExpiry>=14){
             imageView.setImageDrawable(getResources()
                     .getDrawable(R.drawable.expiry_indicator));
-        } else {
-            if(noOfDays<=3){
-                imageView.setImageDrawable(getResources()
-                        .getDrawable(R.drawable.danger_expiry_indicator));
-            } else if(noOfDays<=7){
-                imageView.setImageDrawable(getResources()
-                        .getDrawable(R.drawable.warning_expiry_indicator));
-            }
         }
 
     }

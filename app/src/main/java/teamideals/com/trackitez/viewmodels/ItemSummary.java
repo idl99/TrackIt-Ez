@@ -2,6 +2,7 @@ package teamideals.com.trackitez.viewmodels;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import teamideals.com.trackitez.datastores.UnitDatastore;
 import teamideals.com.trackitez.entities.Unit;
@@ -57,56 +59,34 @@ public class ItemSummary extends ViewModel {
 
     public void addItemUnit(DataSnapshot snapshot){
 
-        String barcode = snapshot.getKey();
         long qty = snapshot.getChildrenCount();
 
         GenericTypeIndicator<Map<String,Unit>> t = new GenericTypeIndicator<>();
         Iterable unitIterable = snapshot.getChildren();
 
-        String itemName = null;
-        long maxDayDiff = 0;
-        while(unitIterable.iterator().hasNext()){
-
-            Unit unit = ((DataSnapshot)unitIterable.iterator().next())
+        Unit unit = ((DataSnapshot)unitIterable.iterator().next())
                     .getValue(Unit.class);
 
-            if(itemName == null) itemName = unit.getItem().getItemName();
+        String itemName = unit.getItem().getItemName();
+        Date expiryDate = unit.getExpiryDate();
 
-            Date expiryDate = unit.getExpiryDate();
-
-            long dayDiff = (expiryDate.getTime() - System.currentTimeMillis())/(1000*60*60*24);
-
-            if(dayDiff>maxDayDiff) maxDayDiff = dayDiff;
-        }
-
-        String expiryPeriod = generateExpiryPeriod(maxDayDiff);
-
-        ItemUnit itemUnit = new ItemUnit(itemName,qty,expiryPeriod);
+        ItemUnit itemUnit = new ItemUnit(itemName,qty,expiryDate);
         List<ItemUnit> temp = mListOfItemUnit.getValue();
         temp.add(itemUnit);
         mListOfItemUnit.setValue(temp);
 
     }
 
-    private String generateExpiryPeriod(long dayDiff){
-        if(dayDiff>90){
-            return (dayDiff/30)+"m";
-        } else if(dayDiff>14){
-            return (dayDiff/7)+"w";
-        } else
-            return dayDiff+"d";
-    }
-
-    public final class ItemUnit{
+    public final class ItemUnit implements Comparable<ItemUnit>{
 
         private String itemName;
         private long quantity;
-        private String expiryPeriod;
+        private Date expiryDate;
 
-        private ItemUnit(String itemName, long quantity, String daysToExpiry){
+        private ItemUnit(String itemName, long quantity, Date expiryDate){
             this.itemName = itemName;
             this.quantity = quantity;
-            this.expiryPeriod = daysToExpiry;
+            this.expiryDate = expiryDate;
         }
 
         public String getItemName(){
@@ -117,10 +97,27 @@ public class ItemSummary extends ViewModel {
             return this.quantity;
         }
 
-        public String getExpiryPeriod(){
-            return this.expiryPeriod;
+        public Date getExpiryDate(){
+            return this.expiryDate;
         }
 
+        public long getExpiryinDays(){
+            return TimeUnit.DAYS.convert(
+                    (this.expiryDate.getTime()-System.currentTimeMillis()),
+                    TimeUnit.MILLISECONDS);
+        }
+
+        @Override
+        public int compareTo(@NonNull ItemUnit o) {
+            long thisExpiry,oExpiry = 0;
+            thisExpiry = this.getExpiryinDays();
+            oExpiry = o.getExpiryinDays();
+
+            return (int)(thisExpiry - oExpiry);
+
+        }
     }
+
+
 
 }
