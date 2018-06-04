@@ -12,7 +12,7 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.viewmodels.AddUnit;
 
-public class AddUnitActivity extends FragmentActivity
+public class AddUnitActivity extends BaseActivity
         implements ItemDetails.OnFragmentInteractionListener,
         ScanTag.OnFragmentInteractionListener,
         FinishAddItem.OnFragmentInteractionListener{

@@ -33,7 +33,7 @@ import butterknife.Unbinder;
 import teamideals.com.trackitez.R;
 import teamideals.com.trackitez.viewmodels.ItemSummary;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // UI elements

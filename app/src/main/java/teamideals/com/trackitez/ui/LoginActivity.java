@@ -22,7 +22,7 @@ import teamideals.com.trackitez.entities.User;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
