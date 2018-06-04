@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="16dp"
                 android:background="@color/colorMaterialWhite"/>
 
         </android.support.v7.widget.Toolbar>
@@ -62,10 +62,10 @@
                 />
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="@dimen/standard_45"
-                android:layout_height="@dimen/standard_45"
+                android:layout_width="@dimen/standard_40"
+                android:layout_height="@dimen/standard_40"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/standard_21"
+                android:layout_margin="@dimen/mini_fab_margin"
                 android:src="@drawable/ic_scan_tag_24dp"
                 android:scaleType="center"/>
 
@@ -96,10 +96,10 @@
                 />
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="@dimen/standard_45"
-                android:layout_height="@dimen/standard_45"
+                android:layout_width="@dimen/standard_40"
+                android:layout_height="@dimen/standard_40"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/standard_21"
+                android:layout_margin="@dimen/mini_fab_margin"
                 android:src="@drawable/ic_add_white_24dp"
                 android:scaleType="center"/>
 
@@ -129,10 +129,10 @@
                 />
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="@dimen/standard_45"
-                android:layout_height="@dimen/standard_45"
+                android:layout_width="@dimen/standard_40"
+                android:layout_height="@dimen/standard_40"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/standard_21"
+                android:layout_margin="@dimen/mini_fab_margin"
                 android:src="@drawable/ic_grocery_list_24dp"
                 android:scaleType="center"/>
 
@@ -140,8 +140,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_menu_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/standard_56"
+            android:layout_height="@dimen/standard_56"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_keyboard_arrow_up_white_24dp"
