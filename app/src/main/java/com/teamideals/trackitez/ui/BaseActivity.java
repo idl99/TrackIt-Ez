@@ -45,6 +45,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkReceiver, filter);
         if (!isNetworkConnected()){
             if(alertDialog == null){
                 showErrorDialog();
@@ -55,8 +57,6 @@ public class BaseActivity extends AppCompatActivity {
                 alertDialog.dismiss();
                 alertDialog = null;
             }
-            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-            registerReceiver(networkReceiver, filter);
         }
     }
 
