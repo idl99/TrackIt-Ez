@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="teamideals.com.trackitez.viewmodels.AddUnit" />
+        <import type="com.teamideals.trackitez.viewmodels.AddUnit" />
 
         <variable
             name="itemName"

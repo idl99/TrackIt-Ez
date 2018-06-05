@@ -6,7 +6,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "teamideals.com.trackitez"
+        applicationId "com.teamideals.trackitez"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
