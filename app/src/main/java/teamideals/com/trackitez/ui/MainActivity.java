@@ -62,14 +62,6 @@ public class MainActivity extends BaseActivity
 
         List<ItemSummary.ItemUnit> itemUnitList = mItemSummary.getListOfItemUnit().getValue();
 
-        mFabMenu.get(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddUnitActivity.class);
-                getApplicationContext().startActivity(intent);
-            }
-        });
-
         mFabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +70,22 @@ public class MainActivity extends BaseActivity
                 } else {
                     closeFABMenu();
                 }
+            }
+        });
+
+        mFabMenu.get(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),CameraActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mFabMenu.get(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddUnitActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -19,7 +19,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="fab_scan_tag_text">Scan Tag</string>
+    <string name="fab_scan_receipt_text">Scan Receipt</string>
     <string name="fab_add_item_text">Add Item</string>
     <string name="fab_grocery_list_text">Grocery List</string>
     <string name="no_of_units">%d Unit/s Available</string>

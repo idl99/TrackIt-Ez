@@ -69,7 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fab_scan_tag_text"
+                android:text="@string/fab_scan_receipt_text"
                 android:textSize="14sp"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center"
