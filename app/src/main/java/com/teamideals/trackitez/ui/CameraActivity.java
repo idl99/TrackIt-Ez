@@ -2,56 +2,40 @@ package com.teamideals.trackitez.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import com.teamideals.trackitez.R;
-
 public class CameraActivity extends AppCompatActivity {
 
-    String mCurrentPhotoPath;
-    Uri mPhotoUri;
-
-    private Unbinder unbinder;
-    @BindView(R.id.camera_image_view)
-    ImageView mImageView;
-
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
-
-        unbinder = ButterKnife.bind(this);
-
         takePicture();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(mPhotoUri != null){
-            outState.putString("capturedImageUri",mPhotoUri.toString());
+        if(mCurrentPhotoPath != null){
+            outState.putString("capturedPhotoPath",mCurrentPhotoPath);
         }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState.containsKey("capturedImageUri")){
-            mPhotoUri = Uri.parse(savedInstanceState.getString("capturedImageUri"));
+        if(savedInstanceState.containsKey("capturedPhotoPath")){
+            mCurrentPhotoPath = savedInstanceState.getString("capturedPhotoPath");
         }
     }
 
@@ -69,11 +53,11 @@ public class CameraActivity extends AppCompatActivity {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                mPhotoUri = FileProvider.getUriForFile(this,
+                Uri uri = FileProvider.getUriForFile(this,
                         "com.teamideals.trackitez.fileprovider",
                         photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri);
-                startActivityForResult(takePictureIntent, 1);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                startActivityForResult(takePictureIntent,1);
             }
         }
     }
@@ -97,14 +81,16 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            mImageView.setImageURI(mPhotoUri);
+        if (requestCode==1 && resultCode==RESULT_OK) {
+            Intent scanReceipt = new Intent(getApplicationContext(),ScanReceipt.class);
+            scanReceipt.putExtra("photoPath",mCurrentPhotoPath);
+            setResult(RESULT_OK,scanReceipt);
+            finish();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
     }
 }

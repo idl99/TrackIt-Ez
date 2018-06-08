@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity
         mFabMenu.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CameraActivity.class);
+                Intent intent = new Intent(getApplicationContext(),ScanReceipt.class);
                 startActivity(intent);
             }
         });
