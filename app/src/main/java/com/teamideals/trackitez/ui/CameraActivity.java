@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class CameraActivity extends AppCompatActivity {
 
-    private String mCurrentPhotoPath;
+    private String mSnapshotPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +26,16 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(mCurrentPhotoPath != null){
-            outState.putString("capturedPhotoPath",mCurrentPhotoPath);
+        if(mSnapshotPath != null){
+            outState.putString("snapshotPath", mSnapshotPath);
         }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState.containsKey("capturedPhotoPath")){
-            mCurrentPhotoPath = savedInstanceState.getString("capturedPhotoPath");
+        if(savedInstanceState.containsKey("snapshotPath")){
+            mSnapshotPath = savedInstanceState.getString("snapshotPath");
         }
     }
 
@@ -74,7 +74,7 @@ public class CameraActivity extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        mSnapshotPath = image.getAbsolutePath();
         return image;
     }
 
@@ -83,7 +83,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==1 && resultCode==RESULT_OK) {
             Intent scanReceipt = new Intent(getApplicationContext(),ScanReceipt.class);
-            scanReceipt.putExtra("photoPath",mCurrentPhotoPath);
+            scanReceipt.putExtra("snapshotPath", mSnapshotPath);
             setResult(RESULT_OK,scanReceipt);
             finish();
         }
