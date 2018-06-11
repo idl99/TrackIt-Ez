@@ -32,7 +32,7 @@
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main" />
         <activity android:name=".ui.AddUnitActivity" />
-        <activity android:name=".ui.CameraActivity" />
+        <activity android:name=".ocr.CameraActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -44,7 +44,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.ScanReceipt" />
+        <activity android:name=".ocr.ScanReceipt" />
 
     </application>
 

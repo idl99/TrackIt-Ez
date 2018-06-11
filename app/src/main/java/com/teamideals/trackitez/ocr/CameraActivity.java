@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.ocr;
 
 import android.content.Intent;
 import android.net.Uri;

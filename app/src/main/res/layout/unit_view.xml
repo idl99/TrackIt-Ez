@@ -57,6 +57,7 @@
     </LinearLayout>
 
     <ImageButton
+        android:id="@+id/icon_delete_unit"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_gravity="center"

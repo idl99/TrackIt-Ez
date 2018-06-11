@@ -30,6 +30,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.teamideals.trackitez.R;
+import com.teamideals.trackitez.ocr.ScanReceipt;
 import com.teamideals.trackitez.viewmodels.ItemSummary;
 
 public class MainActivity extends BaseActivity
