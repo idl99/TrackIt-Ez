@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity
         mUnitSummary = ViewModelProviders.of(this).get(UnitSummary.class);
 
         // Attaching activity to Butterknife binder
-        Unbinder binder = ButterKnife.bind(this);
+        binder = ButterKnife.bind(this);
 
         mFabBtn.setOnClickListener(view -> {
             if (!isFABOpen)
