@@ -1,10 +1,9 @@
 package com.teamideals.trackitez.datastores;
 
 import com.google.firebase.database.DatabaseReference;
+import com.teamideals.trackitez.entities.Item;
 
 import java.util.List;
-
-import com.teamideals.trackitez.entities.Item;
 
 public class ItemDatastore implements Datastore<Item> {
 

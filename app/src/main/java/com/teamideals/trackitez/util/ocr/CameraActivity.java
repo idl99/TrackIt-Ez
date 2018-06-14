@@ -26,7 +26,7 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(mSnapshotPath != null){
+        if (mSnapshotPath != null) {
             outState.putString("snapshotPath", mSnapshotPath);
         }
     }
@@ -34,12 +34,12 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState.containsKey("snapshotPath")){
+        if (savedInstanceState.containsKey("snapshotPath")) {
             mSnapshotPath = savedInstanceState.getString("snapshotPath");
         }
     }
 
-    private void takePicture(){
+    private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -57,7 +57,7 @@ public class CameraActivity extends AppCompatActivity {
                         "com.teamideals.trackitez.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                startActivityForResult(takePictureIntent,1);
+                startActivityForResult(takePictureIntent, 1);
             }
         }
     }
@@ -81,10 +81,10 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1 && resultCode==RESULT_OK) {
-            Intent scanReceipt = new Intent(getApplicationContext(),ScanReceipt.class);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Intent scanReceipt = new Intent(getApplicationContext(), ScanReceipt.class);
             scanReceipt.putExtra("snapshotPath", mSnapshotPath);
-            setResult(RESULT_OK,scanReceipt);
+            setResult(RESULT_OK, scanReceipt);
             finish();
         }
     }

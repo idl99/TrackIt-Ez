@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,8 +41,8 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         // Checking if user is logged in
-        mSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
-        if(mSharedPreferences.getBoolean("signedIn",false))
+        mSharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        if (mSharedPreferences.getBoolean("signedIn", false))
             goToMainActivity(this);
 
         // Set up the login form.
@@ -108,7 +108,7 @@ public class LoginActivity extends BaseActivity {
             cancel = true;
         }
 
-        mAuthTask = new UserLoginTask(this,email, password);
+        mAuthTask = new UserLoginTask(this, email, password);
 
         mAuthTask.execute((Void) null);
 
@@ -149,9 +149,9 @@ public class LoginActivity extends BaseActivity {
                 return false;
             }
 
-            user = User.getInstance(mEmail,mPassword);
+            user = User.getInstance(mEmail, mPassword);
 
-            return user!=null;
+            return user != null;
 
         }
 
@@ -162,7 +162,7 @@ public class LoginActivity extends BaseActivity {
 
             if (success) {
                 // Goes to a method which calls the next activity
-                mSharedPreferences.edit().putBoolean("signedIn",true).apply();
+                mSharedPreferences.edit().putBoolean("signedIn", true).apply();
                 goToMainActivity(mActivity);
             } else {
                 // Shows error toast
@@ -181,8 +181,8 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    public void goToMainActivity(Activity activity){
-        Intent intent = new Intent(activity,MainActivity.class);
+    public void goToMainActivity(Activity activity) {
+        Intent intent = new Intent(activity, MainActivity.class);
         activity.startActivity(intent);
         finish();
     }

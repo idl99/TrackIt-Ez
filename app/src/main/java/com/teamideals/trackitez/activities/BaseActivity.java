@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,17 +18,17 @@ public class BaseActivity extends AppCompatActivity {
     private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getExtras()!=null) {
-                NetworkInfo ni=(NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if(ni!=null && ni.getState()==NetworkInfo.State.CONNECTED) {
+            if (intent.getExtras() != null) {
+                NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
                     // Connected to Internet
-                    if(alertDialog!=null && alertDialog.isShowing()){
+                    if (alertDialog != null && alertDialog.isShowing()) {
                         alertDialog.dismiss();
                         alertDialog = null;
                     }
-                } else{
+                } else {
                     // Not connected to Internet
-                    if(alertDialog == null){
+                    if (alertDialog == null) {
                         showErrorDialog();
                     }
                 }
@@ -47,13 +47,13 @@ public class BaseActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, filter);
-        if (!isNetworkConnected()){
-            if(alertDialog == null){
+        if (!isNetworkConnected()) {
+            if (alertDialog == null) {
                 showErrorDialog();
             }
         } else {
             // Connected
-            if(alertDialog!=null && alertDialog.isShowing()) {
+            if (alertDialog != null && alertDialog.isShowing()) {
                 alertDialog.dismiss();
                 alertDialog = null;
             }
@@ -70,7 +70,7 @@ public class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    private void showErrorDialog(){
+    private void showErrorDialog() {
         alertDialog = new AlertDialog.Builder(this)
                 .setTitle("Internet Disconnected")
                 .setMessage("Please enable Wi/Fi or Data to proceed.")

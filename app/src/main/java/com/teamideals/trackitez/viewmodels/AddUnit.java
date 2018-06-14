@@ -3,18 +3,18 @@ package com.teamideals.trackitez.viewmodels;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.teamideals.trackitez.datastores.ItemDatastore;
+import com.teamideals.trackitez.datastores.UnitDatastore;
+import com.teamideals.trackitez.entities.Item;
+import com.teamideals.trackitez.entities.Unit;
+import com.teamideals.trackitez.entities.UnitStatus;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.teamideals.trackitez.datastores.ItemDatastore;
-import com.teamideals.trackitez.datastores.UnitDatastore;
-import com.teamideals.trackitez.entities.Item;
-import com.teamideals.trackitez.entities.Unit;
-import com.teamideals.trackitez.entities.UnitStatus;
 
 public class AddUnit extends ViewModel {
 
@@ -88,26 +88,26 @@ public class AddUnit extends ViewModel {
         }
     }
 
-    public MutableLiveData<Integer> getTagsScanned(){
+    public MutableLiveData<Integer> getTagsScanned() {
         return this.tagsScanned;
     }
 
-    public void incrementTagsScanned(){
-        if(tagsScanned.getValue()<getListOfUnits().size()){
-            int current =tagsScanned.getValue().intValue();
+    public void incrementTagsScanned() {
+        if (tagsScanned.getValue() < getListOfUnits().size()) {
+            int current = tagsScanned.getValue().intValue();
             tagsScanned.setValue(
-                    current+=1
+                    current += 1
             );
         }
     }
 
-    public int getQuantity(){
+    public int getQuantity() {
         return getListOfUnits().size();
     }
 
-    public void writeUnits(){
+    public void writeUnits() {
         unitDatastore.addAll(
-            listOfUnits.getValue()
+                listOfUnits.getValue()
         );
     }
 

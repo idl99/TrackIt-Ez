@@ -19,7 +19,7 @@ public class UnitSummaryAdapter extends ArrayAdapter<UnitSummary.ItemUnit> {
     private List<UnitSummary.ItemUnit> itemUnitList;
 
     public UnitSummaryAdapter(Context context, int resource,
-                              int textViewResourceId, List<UnitSummary.ItemUnit> itemUnitList){
+                              int textViewResourceId, List<UnitSummary.ItemUnit> itemUnitList) {
         super(context, resource, textViewResourceId, itemUnitList);
         this.itemUnitList = itemUnitList;
     }

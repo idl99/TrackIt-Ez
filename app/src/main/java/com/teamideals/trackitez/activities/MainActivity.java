@@ -1,19 +1,24 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.teamideals.trackitez.R;
+import com.teamideals.trackitez.util.UnitSummaryAdapter;
+import com.teamideals.trackitez.util.ocr.ScanReceipt;
+import com.teamideals.trackitez.viewmodels.UnitSummary;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,11 +27,6 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import com.teamideals.trackitez.R;
-import com.teamideals.trackitez.util.UnitSummaryAdapter;
-import com.teamideals.trackitez.util.ocr.ScanReceipt;
-import com.teamideals.trackitez.viewmodels.UnitSummary;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {

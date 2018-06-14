@@ -33,9 +33,9 @@ public class User implements Serializable {
     /**
      * Method which returns an instance of User
      */
-    public static User getInstance(String email, String password){
-        if(email.equals("admin@gmail.com") && password.equals("admin")){
-            return new User("Ihan","Dilnath","admin@gmail.com");
+    public static User getInstance(String email, String password) {
+        if (email.equals("admin@gmail.com") && password.equals("admin")) {
+            return new User("Ihan", "Dilnath", "admin@gmail.com");
         } else
             return null; // Invalid credentials
     }

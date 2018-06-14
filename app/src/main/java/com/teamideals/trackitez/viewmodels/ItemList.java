@@ -2,21 +2,23 @@ package com.teamideals.trackitez.viewmodels;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import java.util.ArrayList;
-import java.util.List;
 import com.teamideals.trackitez.datastores.ItemDatastore;
 import com.teamideals.trackitez.entities.Item;
 
-public class ItemList extends ViewModel{
+import java.util.ArrayList;
+import java.util.List;
+
+public class ItemList extends ViewModel {
 
     private final ItemDatastore itemDatastore = ItemDatastore.getInstance();
 
     private MutableLiveData<List<Item>> mListOfItem;
 
-    public ItemList(){
+    public ItemList() {
         itemDatastore.getRef().addChildEventListener(
                 new ChildEventListener() {
                     @Override
@@ -47,25 +49,25 @@ public class ItemList extends ViewModel{
         );
     }
 
-    public MutableLiveData<List<Item>> getListOfItem(){
-        if(mListOfItem ==null) {
+    public MutableLiveData<List<Item>> getListOfItem() {
+        if (mListOfItem == null) {
             mListOfItem = new MutableLiveData<>();
             mListOfItem.setValue(new ArrayList<>());
         }
         return mListOfItem;
     }
 
-    public void setListOfItem(List<Item> data){
+    public void setListOfItem(List<Item> data) {
         mListOfItem.setValue(data);
     }
 
-    public void addToListOfItem(Item item){
+    public void addToListOfItem(Item item) {
         List<Item> temp = mListOfItem.getValue();
         temp.add(item);
         setListOfItem(temp);
     }
 
-    public void removeFromListOfItem(Item item){
+    public void removeFromListOfItem(Item item) {
         List<Item> temp = mListOfItem.getValue();
         temp.remove(item);
         setListOfItem(temp);

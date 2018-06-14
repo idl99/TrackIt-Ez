@@ -8,11 +8,11 @@ public class Item implements DatastoreEntity {
     private String itemName;
     private List<ItemCategory> categories;
 
-    public Item(){
+    public Item() {
 
     }
 
-    public Item(String barcode, String itemName, List<ItemCategory> categories){
+    public Item(String barcode, String itemName, List<ItemCategory> categories) {
         this.barcode = barcode;
         this.itemName = itemName;
         this.categories = categories;
@@ -32,12 +32,12 @@ public class Item implements DatastoreEntity {
 
     @Override
     public boolean equals(Object obj) {
-        if(super.equals(obj)){
+        if (super.equals(obj)) {
             return true;
         }
 
         Item objItem = (Item) obj;
-        if(objItem.getBarcode().equals(this.barcode)){
+        if (objItem.getBarcode().equals(this.barcode)) {
             return true;
         }
 

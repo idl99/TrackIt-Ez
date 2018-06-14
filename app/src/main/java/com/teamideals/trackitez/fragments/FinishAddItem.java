@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;

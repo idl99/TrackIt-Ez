@@ -13,7 +13,7 @@ public class Unit implements DatastoreEntity {
     private int nfcTagSerial;
     private Date expiryDate;
 
-    public Unit(){
+    public Unit() {
 
     }
 
@@ -24,12 +24,12 @@ public class Unit implements DatastoreEntity {
     }
 
     public Unit(Item item, String unitId, UnitStatus status, Date expiryDate) {
-        this(item,unitId,status);
+        this(item, unitId, status);
         this.expiryDate = expiryDate;
     }
 
     public Unit(Item item, String unitId, UnitStatus status, int nfcTagSerial, Date expiryDate) {
-        this(item,unitId,status,expiryDate);
+        this(item, unitId, status, expiryDate);
         this.nfcTagSerial = nfcTagSerial;
     }
 

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class OcrAnalysisUtil {
 
-    private OcrAnalysisUtil(){
+    private OcrAnalysisUtil() {
 
     }
 
-    public static List<String> getListOfItemText(String text){
+    public static List<String> getListOfItemText(String text) {
         String string = null;
         List<String> toReturn = new ArrayList<>();
         try {

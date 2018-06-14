@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -15,17 +15,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
+import com.teamideals.trackitez.R;
+import com.teamideals.trackitez.activities.AddUnitActivity;
+import com.teamideals.trackitez.entities.Item;
+import com.teamideals.trackitez.entities.ItemCategory;
+import com.teamideals.trackitez.viewmodels.AddUnit;
+import com.teamideals.trackitez.viewmodels.ItemList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.teamideals.trackitez.R;
-import com.teamideals.trackitez.entities.Item;
-import com.teamideals.trackitez.entities.ItemCategory;
-import com.teamideals.trackitez.viewmodels.AddUnit;
-import com.teamideals.trackitez.viewmodels.ItemList;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,20 +1,22 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.kofigyan.stateprogressbar.StateProgressBar;
-
 import com.teamideals.trackitez.R;
+import com.teamideals.trackitez.fragments.FinishAddItem;
+import com.teamideals.trackitez.fragments.ItemDetails;
+import com.teamideals.trackitez.fragments.ScanTag;
 import com.teamideals.trackitez.viewmodels.AddUnit;
 
 public class AddUnitActivity extends BaseActivity
         implements ItemDetails.OnFragmentInteractionListener,
         ScanTag.OnFragmentInteractionListener,
-        FinishAddItem.OnFragmentInteractionListener{
+        FinishAddItem.OnFragmentInteractionListener {
 
     private StateProgressBar mStaticProgressBar;
     private FragmentManager mFragmentManager;

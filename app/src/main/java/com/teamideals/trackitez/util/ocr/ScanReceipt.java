@@ -42,10 +42,10 @@ public class ScanReceipt extends AppCompatActivity {
         unbinder.unbind();
     }
 
-    private void scanReceipt(){
+    private void scanReceipt() {
         // Handling intent to take snapshot of receipt
-        Intent intent = new Intent(this,CameraActivity.class);
-        startActivityForResult(intent,1);
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ScanReceipt extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1 && resultCode==RESULT_OK){
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             // Handling uri returned by CameraActivity
             String filePath = data.getExtras().getString("snapshotPath");
 
@@ -61,7 +61,7 @@ public class ScanReceipt extends AppCompatActivity {
 
                 Bitmap bmp = BitmapFactory.decodeFile(filePath);
 
-                FirebaseVisionImage fbvImage =  FirebaseVisionImage.fromBitmap(bmp);
+                FirebaseVisionImage fbvImage = FirebaseVisionImage.fromBitmap(bmp);
 
                 OcrDetectionTask ocrDetectionTask = new OcrDetectionTask();
 
@@ -75,12 +75,12 @@ public class ScanReceipt extends AppCompatActivity {
 
     }
 
-    private void showResult(FirebaseVisionCloudText fbvCloudText){
+    private void showResult(FirebaseVisionCloudText fbvCloudText) {
         String resultText = fbvCloudText.getText();
         mResultText.setText(resultText);
     }
 
-    private class OcrDetectionTask extends AsyncTask<FirebaseVisionImage,Void,Void> {
+    private class OcrDetectionTask extends AsyncTask<FirebaseVisionImage, Void, Void> {
 
         @Override
         protected Void doInBackground(FirebaseVisionImage... fbvImages) {

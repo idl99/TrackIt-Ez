@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".ui.ScanTag">
+        tools:context=".fragments.ScanTag">
 
         <TextView
             android:layout_width="wrap_content"

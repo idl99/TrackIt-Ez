@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ui;
+package com.teamideals.trackitez.fragments;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -17,14 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.teamideals.trackitez.R;
+import com.teamideals.trackitez.activities.AddUnitActivity;
+import com.teamideals.trackitez.databinding.FragmentScanTagBinding;
+import com.teamideals.trackitez.viewmodels.AddUnit;
+
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.teamideals.trackitez.R;
-import com.teamideals.trackitez.databinding.FragmentScanTagBinding;
-import com.teamideals.trackitez.viewmodels.AddUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -129,11 +131,11 @@ public class ScanTag extends Fragment {
             @Override
             public void onClick(View v) {
                 mAddUnitViewModel.writeUnits();
-                ((AddUnitActivity)getActivity()).goToSummary();
+                ((AddUnitActivity) getActivity()).goToSummary();
             }
         });
 
-        if(mAddUnitViewModel.getTagsScanned().getValue()== mAddUnitViewModel.getQuantity()){
+        if (mAddUnitViewModel.getTagsScanned().getValue() == mAddUnitViewModel.getQuantity()) {
             mButtonNext.setEnabled(true);
         } else {
             new ScanTagAsyncTask(
@@ -178,7 +180,7 @@ public class ScanTag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void enableNextButton(){
+    public void enableNextButton() {
         mButtonNext.setEnabled(true);
     }
 
@@ -190,7 +192,7 @@ public class ScanTag extends Fragment {
         private WeakReference<Button> mBtnRef;
 
         private ScanTagAsyncTask(MutableLiveData<Integer> mlvTagsScanned,
-                                 int tagsToBeScanned, WeakReference<Button> mBtnRef){
+                                 int tagsToBeScanned, WeakReference<Button> mBtnRef) {
             this.mlvTagsScanned = mlvTagsScanned;
             this.mTagsScanned = mlvTagsScanned.getValue();
             this.mTagsToScan = tagsToBeScanned;
