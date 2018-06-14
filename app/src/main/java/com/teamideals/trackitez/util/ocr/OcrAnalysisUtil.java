@@ -1,4 +1,4 @@
-package com.teamideals.trackitez.ocr;
+package com.teamideals.trackitez.util.ocr;
 
 import java.util.ArrayList;
 import java.util.List;

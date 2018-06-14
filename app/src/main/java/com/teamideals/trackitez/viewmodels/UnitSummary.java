@@ -19,13 +19,13 @@ import com.teamideals.trackitez.datastores.UnitDatastore;
 import com.teamideals.trackitez.entities.Unit;
 import com.teamideals.trackitez.entities.UnitStatus;
 
-public class ItemSummary extends ViewModel {
+public class UnitSummary extends ViewModel {
 
     private UnitDatastore unitDatastore = UnitDatastore.getInstance();
 
     private MutableLiveData<List<ItemUnit>> mListOfItemUnit = new MutableLiveData<>();
 
-    public ItemSummary(){
+    public UnitSummary(){
         mListOfItemUnit.setValue(new ArrayList<ItemUnit>());
         unitDatastore.getRef().child(String.valueOf(UnitStatus.IN_STORAGE)).addChildEventListener(
                 new ChildEventListener() {
