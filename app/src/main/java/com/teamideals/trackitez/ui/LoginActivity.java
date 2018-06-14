@@ -40,8 +40,8 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Checking if user is logged in
         mSharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
-
         if(mSharedPreferences.getBoolean("signedIn",false))
             goToMainActivity(this);
 
@@ -115,12 +115,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -143,7 +141,6 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
@@ -154,7 +151,6 @@ public class LoginActivity extends BaseActivity {
 
             user = User.getInstance(mEmail,mPassword);
 
-            // TODO: register the new account here.
             return user!=null;
 
         }
