@@ -16,9 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.teamideals.trackitez.R;
-import com.teamideals.trackitez.util.UnitSummaryAdapter;
+import com.teamideals.trackitez.util.UnitGroupAdapter;
 import com.teamideals.trackitez.util.ocr.ScanReceipt;
-import com.teamideals.trackitez.viewmodels.UnitSummary;
+import com.teamideals.trackitez.viewmodels.UnitGroupList;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    UnitSummary mUnitSummary; // View model
+    UnitGroupList mUnitGroupList; // View model
 
 
     @Override
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         // Attaching view model to this instance of MainActivity
-        mUnitSummary = ViewModelProviders.of(this).get(UnitSummary.class);
+        mUnitGroupList = ViewModelProviders.of(this).get(UnitGroupList.class);
 
         // Attaching activity to Butterknife binder
         binder = ButterKnife.bind(this);
@@ -92,17 +92,17 @@ public class MainActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        List<UnitSummary.ItemUnit> itemUnitList = mUnitSummary.getListOfItemUnit().getValue();
+        List<UnitGroupList.UnitGroup> unitList = mUnitGroupList.getListOfUnit().getValue();
         mUnitListView.setAdapter(
-                new UnitSummaryAdapter(
+                new UnitGroupAdapter(
                         this,
-                        R.layout.unit_view,
+                        R.layout.unit_group_view,
                         R.id.itemName,
-                        itemUnitList
+                        unitList
                 )
         );
 
-        mUnitSummary.getListOfItemUnit().observe(
+        mUnitGroupList.getListOfUnit().observe(
                 this, units -> {
                     Collections.sort(units);
                     ((BaseAdapter) mUnitListView.getAdapter()).notifyDataSetChanged();

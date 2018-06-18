@@ -3,8 +3,7 @@ package com.teamideals.trackitez.viewmodels;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.teamideals.trackitez.datastores.ItemDatastore;
-import com.teamideals.trackitez.datastores.UnitDatastore;
+import com.teamideals.trackitez.database.UnitDatastore;
 import com.teamideals.trackitez.entities.Item;
 import com.teamideals.trackitez.entities.Unit;
 import com.teamideals.trackitez.entities.UnitStatus;
@@ -19,7 +18,6 @@ import java.util.List;
 public class AddUnit extends ViewModel {
 
     // Reference to relevant datastores
-    private ItemDatastore itemDatastore = ItemDatastore.getInstance();
     private UnitDatastore unitDatastore = UnitDatastore.getInstance();
 
     // Instance variables
@@ -94,7 +92,7 @@ public class AddUnit extends ViewModel {
 
     public void incrementTagsScanned() {
         if (tagsScanned.getValue() < getListOfUnits().size()) {
-            int current = tagsScanned.getValue().intValue();
+            int current = tagsScanned.getValue();
             tagsScanned.setValue(
                     current += 1
             );
@@ -106,9 +104,9 @@ public class AddUnit extends ViewModel {
     }
 
     public void writeUnits() {
-        unitDatastore.addAll(
-                listOfUnits.getValue()
-        );
+        for (Unit unit : getListOfUnits()) {
+            unitDatastore.add(unit);
+        }
     }
 
 }
