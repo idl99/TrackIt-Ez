@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Item implements DatastoreEntity {
 
-    private String barcode;
     private String itemName;
     private List<ItemCategory> categories;
 
@@ -12,14 +11,9 @@ public class Item implements DatastoreEntity {
 
     }
 
-    public Item(String barcode, String itemName, List<ItemCategory> categories) {
-        this.barcode = barcode;
+    public Item(String itemName, List<ItemCategory> categories) {
         this.itemName = itemName;
         this.categories = categories;
-    }
-
-    public String getBarcode() {
-        return barcode;
     }
 
     public String getItemName() {
@@ -32,12 +26,15 @@ public class Item implements DatastoreEntity {
 
     @Override
     public boolean equals(Object obj) {
+
         if (super.equals(obj)) {
             return true;
+
         }
 
         Item objItem = (Item) obj;
-        if (objItem.getBarcode().equals(this.barcode)) {
+
+        if (objItem.getItemName().equals(this.itemName)) {
             return true;
         }
 
