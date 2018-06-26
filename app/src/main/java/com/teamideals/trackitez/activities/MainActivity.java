@@ -15,7 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.teamideals.trackitez.R;
+import com.teamideals.trackitez.database.UnitDatastore;
+import com.teamideals.trackitez.entities.NfcTag;
+import com.teamideals.trackitez.entities.Unit;
+import com.teamideals.trackitez.listeners.OnTagScanListener;
+import com.teamideals.trackitez.listeners.TagScanNotifier;
 import com.teamideals.trackitez.util.UnitGroupAdapter;
 import com.teamideals.trackitez.util.ocr.ScanReceipt;
 import com.teamideals.trackitez.viewmodels.UnitGroupList;
@@ -29,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnTagScanListener{
 
     // UI Bindings
     private Unbinder binder;
@@ -51,7 +60,6 @@ public class MainActivity extends BaseActivity
     NavigationView navigationView;
 
     UnitGroupList mUnitGroupList; // View model
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +115,8 @@ public class MainActivity extends BaseActivity
                     Collections.sort(units);
                     ((BaseAdapter) mUnitListView.getAdapter()).notifyDataSetChanged();
                 });
+
+        TagScanNotifier tagScanNotifier = new TagScanNotifier(this);
 
     }
 
@@ -188,5 +198,42 @@ public class MainActivity extends BaseActivity
     protected void onDestroy() {
         super.onDestroy();
         binder.unbind();
+    }
+
+    @Override
+    public void newTagScanned(NfcTag nfcTag) {
+        // Do nothing
+    }
+
+    @Override
+    public void inUseTagScanned(NfcTag nfcTag) {
+
+        String uid = nfcTag.getUid();
+        DatabaseReference dbRef = UnitDatastore.getInstance().getRef().child("IN_STORAGE");
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot unitGroupSnapshot:dataSnapshot.getChildren()){
+                    for(DataSnapshot unitSnapshot:unitGroupSnapshot.getChildren()) {
+                        Unit unit = unitSnapshot.getValue(Unit.class);
+                        if (unit.getNfcTagSerial().equals(nfcTag.getUid())) {
+                            dbRef.child(unitGroupSnapshot.getKey()).
+                                    child(unit.getUnitId()).removeValue();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void notInUseTagScanned(NfcTag nfcTag) {
+
     }
 }
