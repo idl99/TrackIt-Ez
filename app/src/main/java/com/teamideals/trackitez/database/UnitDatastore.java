@@ -9,7 +9,7 @@ public class UnitDatastore implements Datastore<Unit> {
 
     private final DatabaseReference dbRef =
             Datastore.firebaseDatabase.
-                    getReference("/userDatastore/userId1/unitsStored");
+                    getReference("/userId1/unitsStored");
 
 
     public static UnitDatastore getInstance() {
