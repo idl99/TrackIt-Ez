@@ -13,7 +13,7 @@ public class Unit implements DatastoreEntity, Comparable<Unit> {
     private UnitStatus status;
 
     // Optional Parameters
-    private int nfcTagSerial;
+    private String nfcTagSerial;
     private Date expiryDate;
 
     public Unit() {
@@ -31,7 +31,7 @@ public class Unit implements DatastoreEntity, Comparable<Unit> {
         this.expiryDate = expiryDate;
     }
 
-    public Unit(Item item, String unitId, UnitStatus status, int nfcTagSerial, Date expiryDate) {
+    public Unit(Item item, String unitId, UnitStatus status, String nfcTagSerial, Date expiryDate) {
         this(item, unitId, status, expiryDate);
         this.nfcTagSerial = nfcTagSerial;
     }
@@ -48,12 +48,16 @@ public class Unit implements DatastoreEntity, Comparable<Unit> {
         return status;
     }
 
-    public int getNfcTagSerial() {
+    public String getNfcTagSerial() {
         return nfcTagSerial;
     }
 
     public Date getExpiryDate() {
         return expiryDate;
+    }
+
+    public void setNfcTagSerial(String nfcTagSerial) {
+        this.nfcTagSerial = nfcTagSerial;
     }
 
     public long getExpiryInDays() {
