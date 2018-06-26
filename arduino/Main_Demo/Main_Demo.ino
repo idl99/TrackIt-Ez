@@ -33,8 +33,6 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 void setup() {
   Serial.begin(115200);
 
-  while (!Serial); // Do not continue until Serial is instantiated
-
   // Connecting to WiFi AP
   Serial.print("Connecting to ");
   Serial.print(ssid);
@@ -55,6 +53,8 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
+  Serial.println();
+
   SPI.begin();      // Initiate  SPI bus
   mfrc522.PCD_Init();   // Initiate MFRC522
 
@@ -74,22 +74,25 @@ void loop() {
     return;
   }
 
-  String uid = readRfid();
-  Serial.print("UID is ");
-  Serial.println(uid);
+  String readUid = readRfid();
+  Serial.println("UID is " + readUid);
 
-  if (isTagInUse(uid) == true) {
-    Serial.println("REQUEST DENIED: Tag is already in use");
-  } else {
-    Firebase.setBool("nfcTagDatastore/" + uid + "/inUse", true);
-    // handle error
-    if (Firebase.success()) {
-      Serial.println("SUCCESSFUL: Tag written to Firebase");
-    } else if (Firebase.failed()) {
-      Serial.println("ERROR : Tag not written to Firebase");
+  // Tag related logic goes here
+  if (isTagExists(readUid)) {
+    boolean isInUse = getPreviousInUse(readUid);
+    if (isInUse) {
+      Firebase.setBool("userId1/nfcTags/" + readUid + "/inUse", false);
+      Serial.println("Existing tag " + readUid + " in use, updated in Firebase");
+    } else {
+      Firebase.setBool("userId1/nfcTags/" + readUid + "/inUse", true);
     }
-    Serial.println();
+  } else if (!isTagExists(readUid)) {
+    Firebase.setBool("userId1/nfcTags/" + readUid + "/inUse", true);
   }
+
+  Serial.println();
+
+  delay(2500);
 
 }
 
@@ -100,18 +103,29 @@ String readRfid() {
   byte letter;
   for (byte i = 0; i < mfrc522.uid.size; i++)
   {
-    content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+    if (i != 0) {
+      content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+    }
     content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   content.toUpperCase();
   return content;
 }
 
-// Method that checks if NFC Tag already in use
-// Takes Tag UID as parameter, returns boolean
-boolean isTagInUse(String uid) {
-  boolean returnValue = Firebase.getBool("nfcTagDatastore/" +
-                                         uid + "/inUse");
-  return returnValue;
+// Method that checks if NFC Tag registered in database
+boolean isTagExists(String uid) {
+  FirebaseObject firebaseObj = Firebase.get("userId1/nfcTags/" + uid + "");
+  JsonVariant firebaseJson = firebaseObj.getJsonVariant("");
+  if ((firebaseJson.as<String>()).equals("null")) {
+    Serial.println("Tag doesn't exist");
+    return false;
+  } else {
+    Serial.println("Tag exists");
+    return true;
+  }
+}
+
+boolean getPreviousInUse(String uid) {
+  return Firebase.getBool("userId1/nfcTags/" + uid + "/inUse");
 }
 
