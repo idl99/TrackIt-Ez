@@ -9,8 +9,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0.1">
 
         <ImageView
@@ -21,11 +21,11 @@
             android:src="@drawable/expiry_indicator" />
 
         <TextView
-            android:id="@+id/qty"
+            android:id="@+id/noOfDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text=" "
+            android:text=""
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -34,9 +34,9 @@
         android:id="@+id/details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_gravity="center"
         android:layout_weight="0.7"
         android:orientation="vertical"
         android:weightSum="2">
@@ -45,21 +45,22 @@
             android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" "
+            android:text=""
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/itemCategory"
+            android:id="@+id/Quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" "
+            android:text=""
             android:textSize="14sp" />
     </LinearLayout>
 
     <ImageButton
+        android:id="@+id/icon_delete_unit"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_cancel_black_24dp" />
+        android:background="@drawable/trash_can" />
 
 </LinearLayout>

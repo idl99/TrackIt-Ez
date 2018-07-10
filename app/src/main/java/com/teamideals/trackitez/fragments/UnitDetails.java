@@ -20,7 +20,7 @@ import com.teamideals.trackitez.activities.AddUnitActivity;
 import com.teamideals.trackitez.entities.Item;
 import com.teamideals.trackitez.entities.ItemCategory;
 import com.teamideals.trackitez.viewmodels.AddUnit;
-import com.teamideals.trackitez.viewmodels.ItemList;
+import com.teamideals.trackitez.viewmodels.UnitGroupList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +32,12 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ItemDetails.OnFragmentInteractionListener} interface
+ * {@link UnitDetails.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ItemDetails#newInstance} factory method to
+ * Use the {@link UnitDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItemDetails extends Fragment {
+public class UnitDetails extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,8 +49,8 @@ public class ItemDetails extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private ItemList mItemListViewModel;
     private AddUnit mAddUnitViewModel;
+    private UnitGroupList mUnitGroupListViewModel;
 
     private Unbinder unbinder;
 
@@ -65,7 +65,7 @@ public class ItemDetails extends Fragment {
     @BindView(R.id.step1Btn)
     Button mStep1Btn;
 
-    public ItemDetails() {
+    public UnitDetails() {
         // Required empty public constructor
     }
 
@@ -75,11 +75,11 @@ public class ItemDetails extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemDetails.
+     * @return A new instance of fragment UnitDetails.
      */
     // TODO: Rename and change types and number of parameters
-    public static ItemDetails newInstance(String param1, String param2) {
-        ItemDetails fragment = new ItemDetails();
+    public static UnitDetails newInstance(String param1, String param2) {
+        UnitDetails fragment = new UnitDetails();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -94,8 +94,8 @@ public class ItemDetails extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mItemListViewModel = ViewModelProviders.of(getActivity()).get(ItemList.class);
         mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnit.class);
+        mUnitGroupListViewModel = ViewModelProviders.of(getActivity()).get(UnitGroupList.class);
         setRetainInstance(true);
     }
 
@@ -107,12 +107,7 @@ public class ItemDetails extends Fragment {
                 container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        mStep1Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                processItemDetails();
-            }
-        });
+        mStep1Btn.setOnClickListener(v -> processItemDetails());
 
         return view;
     }
@@ -120,8 +115,9 @@ public class ItemDetails extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mItemName.setAdapter(new ArrayAdapter<Item>(getContext(),
-                android.R.layout.select_dialog_item, mItemListViewModel.getListOfItem().getValue())
+        mItemName.setAdapter(new ArrayAdapter<UnitGroupList.UnitGroup>(getActivity(),
+                android.R.layout.select_dialog_item,
+                mUnitGroupListViewModel.getListOfUnit().getValue())
         );
         mItemName.setThreshold(3);
     }
@@ -174,7 +170,7 @@ public class ItemDetails extends Fragment {
         List<ItemCategory> listOfCategories = new ArrayList<>();
         listOfCategories.add(ItemCategory.OTHER);
 
-        Item item = new Item(barcode, mItemName.getText().toString(), listOfCategories);
+        Item item = new Item(mItemName.getText().toString(), listOfCategories);
         mAddUnitViewModel.setItem(item);
 
         mAddUnitViewModel.setExpiryDate(mExpiryDate.getEditableText().toString());

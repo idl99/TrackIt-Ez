@@ -1,15 +1,16 @@
-package com.teamideals.trackitez.datastores;
+package com.teamideals.trackitez.database;
 
 import com.google.firebase.database.DatabaseReference;
 import com.teamideals.trackitez.entities.Unit;
 
-import java.util.List;
-
 public class UnitDatastore implements Datastore<Unit> {
 
     private static final UnitDatastore ourInstance = new UnitDatastore();
-    private final DatabaseReference dsReference =
-            Datastore.firebaseDatabase.getReference("/userDatastore/userId1/unitsStored");
+
+    private final DatabaseReference dbRef =
+            Datastore.firebaseDatabase.
+                    getReference("/userId1/unitsStored");
+
 
     public static UnitDatastore getInstance() {
         return ourInstance;
@@ -20,16 +21,10 @@ public class UnitDatastore implements Datastore<Unit> {
 
     @Override
     public void add(Unit unit) {
-
-    }
-
-    @Override
-    public void addAll(List<Unit> unitList) {
-        for (Unit unit : unitList) {
-            dsReference.child(unit.getStatus().toString())
-                    .child(unit.getItem().getBarcode())
-                    .child(unit.getUnitId()).setValue(unit);
-        }
+        dbRef.child(unit.getStatus().toString())
+                .child(unit.getItem().getItemName())
+                .child(unit.getUnitId())
+                .setValue(unit);
     }
 
     @Override
@@ -44,7 +39,7 @@ public class UnitDatastore implements Datastore<Unit> {
 
     @Override
     public DatabaseReference getRef() {
-        return this.dsReference;
+        return this.dbRef;
     }
 
 }

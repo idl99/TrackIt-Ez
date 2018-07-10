@@ -8,11 +8,11 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="16dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -26,19 +26,19 @@
                 android:gravity="center_vertical">
 
                 <SearchView
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
-                    android:layout_weight="0.9"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.9"
                     android:background="@color/colorMaterialWhite" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_weight="0.1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="0.1"
                     android:src="@drawable/ic_sort_white_24dp" />
 
             </LinearLayout>
@@ -66,15 +66,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fab_scan_receipt_text"
-                android:textSize="14sp"
-                android:textColor="@android:color/white"
                 android:layout_gravity="center"
                 android:background="@drawable/fab_corners"
-                android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="@string/fab_scan_receipt_text"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
                 android:visibility="invisible" />
 
             <android.support.design.widget.FloatingActionButton
@@ -82,8 +82,8 @@
                 android:layout_height="@dimen/standard_40"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/mini_fab_margin"
-                android:src="@drawable/ic_scan_tag_24dp"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_scan_tag_24dp" />
 
         </LinearLayout>
 
@@ -98,15 +98,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fab_add_item_text"
-                android:textSize="14sp"
-                android:textColor="@android:color/white"
                 android:layout_gravity="center"
                 android:background="@drawable/fab_corners"
-                android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="@string/fab_add_item_text"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
                 android:visibility="invisible" />
 
             <android.support.design.widget.FloatingActionButton
@@ -114,8 +114,8 @@
                 android:layout_height="@dimen/standard_40"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/mini_fab_margin"
-                android:src="@drawable/ic_add_white_24dp"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_add_white_24dp" />
 
         </LinearLayout>
 
@@ -129,15 +129,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fab_grocery_list_text"
-                android:textSize="14sp"
-                android:textColor="@android:color/white"
                 android:layout_gravity="center"
                 android:background="@drawable/fab_corners"
-                android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="@string/fab_grocery_list_text"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
                 android:visibility="invisible" />
 
             <android.support.design.widget.FloatingActionButton
@@ -145,8 +145,8 @@
                 android:layout_height="@dimen/standard_40"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/mini_fab_margin"
-                android:src="@drawable/ic_grocery_list_24dp"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_grocery_list_24dp" />
 
         </LinearLayout>
 
@@ -156,8 +156,8 @@
             android:layout_height="@dimen/standard_56"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_keyboard_arrow_up_white_24dp"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:src="@drawable/ic_keyboard_arrow_up_white_24dp" />
 
     </FrameLayout>
 

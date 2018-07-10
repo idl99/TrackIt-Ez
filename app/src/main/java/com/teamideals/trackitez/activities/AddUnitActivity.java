@@ -9,12 +9,12 @@ import android.support.v4.app.FragmentManager;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.teamideals.trackitez.R;
 import com.teamideals.trackitez.fragments.FinishAddItem;
-import com.teamideals.trackitez.fragments.ItemDetails;
+import com.teamideals.trackitez.fragments.UnitDetails;
 import com.teamideals.trackitez.fragments.ScanTag;
 import com.teamideals.trackitez.viewmodels.AddUnit;
 
 public class AddUnitActivity extends BaseActivity
-        implements ItemDetails.OnFragmentInteractionListener,
+        implements UnitDetails.OnFragmentInteractionListener,
         ScanTag.OnFragmentInteractionListener,
         FinishAddItem.OnFragmentInteractionListener {
 
@@ -75,7 +75,7 @@ public class AddUnitActivity extends BaseActivity
     public void goToItemDetails() {
         mFragmentManager.beginTransaction().replace(
                 R.id.fragmentView,
-                new ItemDetails(), "" +
+                new UnitDetails(), "" +
                         "Item_Detail_Fragment").commit();
     }
 
@@ -97,6 +97,14 @@ public class AddUnitActivity extends BaseActivity
                 R.id.fragmentView,
                 new FinishAddItem(), "" +
                         "FinishAddItem").commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getFragmentManager().popBackStack(null,
+                android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        finish();
     }
 
 }

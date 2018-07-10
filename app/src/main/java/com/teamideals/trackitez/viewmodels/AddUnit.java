@@ -3,8 +3,7 @@ package com.teamideals.trackitez.viewmodels;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.teamideals.trackitez.datastores.ItemDatastore;
-import com.teamideals.trackitez.datastores.UnitDatastore;
+import com.teamideals.trackitez.database.UnitDatastore;
 import com.teamideals.trackitez.entities.Item;
 import com.teamideals.trackitez.entities.Unit;
 import com.teamideals.trackitez.entities.UnitStatus;
@@ -19,25 +18,19 @@ import java.util.List;
 public class AddUnit extends ViewModel {
 
     // Reference to relevant datastores
-    private ItemDatastore itemDatastore = ItemDatastore.getInstance();
     private UnitDatastore unitDatastore = UnitDatastore.getInstance();
 
     // Instance variables
-    private MutableLiveData<Item> item; // Item of units to be added
-    private MutableLiveData<List<Unit>> listOfUnits; // List containing units to be added
+    private MutableLiveData<Item> item = new MutableLiveData<>(); // Item of units to be added
+    private MutableLiveData<List<Unit>> listOfUnits = new MutableLiveData<>(); // List containing units to be added
+    private MutableLiveData<Integer> tagsScanned = new MutableLiveData<>();
     private Date expiryDate; // Expiry Date of units to be added
-
-    private int currentProgressState;
-    private MutableLiveData<Integer> tagsScanned;
+    private int currentProgressState = 1;
 
     public AddUnit() {
-        item = new MutableLiveData<>();
         item.setValue(new Item());
-        listOfUnits = new MutableLiveData<>();
         listOfUnits.setValue(new ArrayList<>(1));
-        currentProgressState = 1;
-        tagsScanned = new MutableLiveData<>();
-        tagsScanned.setValue(new Integer(0));
+        tagsScanned.setValue(0);
     }
 
     public Item getItem() {
@@ -68,6 +61,7 @@ public class AddUnit extends ViewModel {
     }
 
     public int getCurrentProgressState() {
+
         return currentProgressState;
     }
 
@@ -92,11 +86,13 @@ public class AddUnit extends ViewModel {
         return this.tagsScanned;
     }
 
-    public void incrementTagsScanned() {
+    public void onTagScanned(String uuid) {
         if (tagsScanned.getValue() < getListOfUnits().size()) {
-            int current = tagsScanned.getValue().intValue();
+            listOfUnits.getValue().get(tagsScanned.getValue())
+                    .setNfcTagSerial(uuid);
+            int current = tagsScanned.getValue();
             tagsScanned.setValue(
-                    current += 1
+                    ++current
             );
         }
     }
@@ -106,9 +102,9 @@ public class AddUnit extends ViewModel {
     }
 
     public void writeUnits() {
-        unitDatastore.addAll(
-                listOfUnits.getValue()
-        );
+        for (Unit unit : getListOfUnits()) {
+            unitDatastore.add(unit);
+        }
     }
 
 }

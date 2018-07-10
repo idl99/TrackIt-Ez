@@ -1,12 +1,10 @@
 package com.teamideals.trackitez.fragments;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,9 +18,10 @@ import android.widget.Button;
 import com.teamideals.trackitez.R;
 import com.teamideals.trackitez.activities.AddUnitActivity;
 import com.teamideals.trackitez.databinding.FragmentScanTagBinding;
+import com.teamideals.trackitez.entities.NfcTag;
+import com.teamideals.trackitez.listeners.OnTagScanListener;
+import com.teamideals.trackitez.listeners.TagScanNotifier;
 import com.teamideals.trackitez.viewmodels.AddUnit;
-
-import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +35,7 @@ import butterknife.Unbinder;
  * Use the {@link ScanTag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScanTag extends Fragment {
+public class ScanTag extends Fragment implements OnTagScanListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,13 +76,20 @@ public class ScanTag extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         mAddUnitViewModel = ViewModelProviders.of(getActivity()).get(AddUnit.class);
+
         setRetainInstance(true);
+
+        TagScanNotifier tagScanNotifier = new TagScanNotifier(this);
+
     }
 
     @Override
@@ -99,12 +105,9 @@ public class ScanTag extends Fragment {
         fragmentScanTagBinding.setTagsToScan(mAddUnitViewModel.getListOfUnits().size());
         fragmentScanTagBinding.setExpiryDate(mAddUnitViewModel.getExpiryDate());
 
-        final Observer<Integer> tagsScannedObserver = new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                Log.d("My_Log", "NUMBER OF TAGS SCANNED: " + integer);
-                fragmentScanTagBinding.setTagsScanned(integer);
-            }
+        final Observer<Integer> tagsScannedObserver = integer -> {
+            Log.d("My_Log", "Number of tags scanned: " + integer);
+            fragmentScanTagBinding.setTagsScanned(integer);
         };
 
         mAddUnitViewModel.getTagsScanned().observe(this, tagsScannedObserver);
@@ -127,23 +130,12 @@ public class ScanTag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mButtonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAddUnitViewModel.writeUnits();
-                ((AddUnitActivity) getActivity()).goToSummary();
-            }
+        mButtonNext.setOnClickListener(v -> {
+            mAddUnitViewModel.writeUnits();
+            ((AddUnitActivity) getActivity()).goToSummary();
         });
 
-        if (mAddUnitViewModel.getTagsScanned().getValue() == mAddUnitViewModel.getQuantity()) {
-            mButtonNext.setEnabled(true);
-        } else {
-            new ScanTagAsyncTask(
-                    mAddUnitViewModel.getTagsScanned(),
-                    mAddUnitViewModel.getQuantity(),
-                    new WeakReference<Button>(mButtonNext)
-            ).execute();
-        }
+        invalidateButton();
 
     }
 
@@ -162,8 +154,9 @@ public class ScanTag extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        unbinder.unbind();
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -180,52 +173,29 @@ public class ScanTag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void enableNextButton() {
-        mButtonNext.setEnabled(true);
+    public void invalidateButton(){
+        if (mAddUnitViewModel.getTagsScanned().getValue()
+                == mAddUnitViewModel.getQuantity()){
+            mButtonNext.setEnabled(true);
+        }
+
     }
 
-    private static class ScanTagAsyncTask extends AsyncTask<Void, Void, Void> {
+    @Override
+    public void newTagScanned(NfcTag nfcTag) {
+        mAddUnitViewModel.onTagScanned(nfcTag.getUid());
+        invalidateButton();
+    }
 
-        private MutableLiveData<Integer> mlvTagsScanned;
-        private int mTagsScanned;
-        private int mTagsToScan;
-        private WeakReference<Button> mBtnRef;
+    @Override
+    public void inUseTagScanned(NfcTag nfcTag) {
+        Log.d("My_Log","Tag already in use");
+    }
 
-        private ScanTagAsyncTask(MutableLiveData<Integer> mlvTagsScanned,
-                                 int tagsToBeScanned, WeakReference<Button> mBtnRef) {
-            this.mlvTagsScanned = mlvTagsScanned;
-            this.mTagsScanned = mlvTagsScanned.getValue();
-            this.mTagsToScan = tagsToBeScanned;
-            this.mBtnRef = mBtnRef;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-
-                Thread.sleep(3500);
-
-                while (mTagsScanned < mTagsToScan) {
-                    mlvTagsScanned.postValue(
-                            ++mTagsScanned
-                    );
-                    Thread.sleep(1000);
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            mBtnRef.get().setEnabled(true);
-        }
+    @Override
+    public void notInUseTagScanned(NfcTag nfcTag) {
+        mAddUnitViewModel.onTagScanned(nfcTag.getUid());
+        invalidateButton();
     }
 
 }

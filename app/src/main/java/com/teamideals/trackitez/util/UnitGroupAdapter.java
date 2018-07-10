@@ -3,36 +3,46 @@ package com.teamideals.trackitez.util;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.teamideals.trackitez.R;
-import com.teamideals.trackitez.viewmodels.UnitSummary;
+import com.teamideals.trackitez.viewmodels.UnitGroupList;
 
 import java.util.List;
 
-public class UnitSummaryAdapter extends ArrayAdapter<UnitSummary.ItemUnit> {
+public class UnitGroupAdapter extends ArrayAdapter<UnitGroupList.UnitGroup> {
 
-    private List<UnitSummary.ItemUnit> itemUnitList;
+    private List<UnitGroupList.UnitGroup> unitGroupList;
 
-    public UnitSummaryAdapter(Context context, int resource,
-                              int textViewResourceId, List<UnitSummary.ItemUnit> itemUnitList) {
-        super(context, resource, textViewResourceId, itemUnitList);
-        this.itemUnitList = itemUnitList;
+    public UnitGroupAdapter(Context context, int resource,
+                            int textViewResourceId, List<UnitGroupList.UnitGroup> unitGroupList) {
+        super(context, resource, textViewResourceId, unitGroupList);
+        this.unitGroupList = unitGroupList;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         View view = super.getView(position, convertView, parent);
 
-        UnitSummary.ItemUnit itemUnit = itemUnitList.get(position);
-        String itemName = itemUnit.getItemName();
-        long quantity = itemUnit.getQuantity();
-        long daysToExpiry = itemUnit.getExpiryinDays();
+        UnitGroupList.UnitGroup unitGroup = unitGroupList.get(position);
+        String itemName = unitGroup.getItemName();
+        long daysToExpiry = unitGroup.getNearestExpiry();
+        long quantity = unitGroup.getQuantity();
+
+        ImageView imageView = view.findViewById(R.id.circleExpiryIndicator);
+        setCeiLevel(imageView, daysToExpiry);
+
+        TextView tvDaysToExpiry = view.findViewById(R.id.noOfDays);
+        String expiryTag = expiryTag(daysToExpiry);
+        tvDaysToExpiry.setText(expiryTag);
 
         TextView tvItemName = view.findViewById(R.id.itemName);
         tvItemName.setText(itemName);
@@ -43,12 +53,13 @@ public class UnitSummaryAdapter extends ArrayAdapter<UnitSummary.ItemUnit> {
                         quantity
                 ));
 
-        TextView tvDaysToExpiry = view.findViewById(R.id.noOfDays);
-        String expiryTag = expiryTag(daysToExpiry);
-        tvDaysToExpiry.setText(expiryTag);
-
-        ImageView imageView = view.findViewById(R.id.circleExpiryIndicator);
-        setCeiLevel(imageView, daysToExpiry);
+        ImageButton ivTrashCan = view.findViewById(R.id.icon_delete_unit);
+        // TODO: update cloud db
+        ivTrashCan.setOnClickListener(v -> {
+            Log.d("LOGS", "Trash can onClick");
+            unitGroupList.remove(getItem(position));
+            notifyDataSetChanged();
+        });
 
         return view;
     }

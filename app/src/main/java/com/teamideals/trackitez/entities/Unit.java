@@ -1,8 +1,11 @@
 package com.teamideals.trackitez.entities;
 
-import java.util.Date;
+import android.support.annotation.NonNull;
 
-public class Unit implements DatastoreEntity {
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+public class Unit implements DatastoreEntity, Comparable<Unit> {
 
     // Required Parameters
     private Item item;
@@ -10,7 +13,7 @@ public class Unit implements DatastoreEntity {
     private UnitStatus status;
 
     // Optional Parameters
-    private int nfcTagSerial;
+    private String nfcTagSerial;
     private Date expiryDate;
 
     public Unit() {
@@ -28,7 +31,7 @@ public class Unit implements DatastoreEntity {
         this.expiryDate = expiryDate;
     }
 
-    public Unit(Item item, String unitId, UnitStatus status, int nfcTagSerial, Date expiryDate) {
+    public Unit(Item item, String unitId, UnitStatus status, String nfcTagSerial, Date expiryDate) {
         this(item, unitId, status, expiryDate);
         this.nfcTagSerial = nfcTagSerial;
     }
@@ -45,7 +48,7 @@ public class Unit implements DatastoreEntity {
         return status;
     }
 
-    public int getNfcTagSerial() {
+    public String getNfcTagSerial() {
         return nfcTagSerial;
     }
 
@@ -53,4 +56,25 @@ public class Unit implements DatastoreEntity {
         return expiryDate;
     }
 
+    public void setNfcTagSerial(String nfcTagSerial) {
+        this.nfcTagSerial = nfcTagSerial;
+    }
+
+    public long getExpiryInDays() {
+        return TimeUnit.DAYS.convert(
+                (this.expiryDate.getTime() - System.currentTimeMillis()),
+                TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj) ||
+                item.getItemName().equals
+                        (((Unit) obj).getItem().getItemName());
+    }
+
+    @Override
+    public int compareTo(@NonNull Unit o) {
+        return (int) (this.getExpiryInDays() - o.getExpiryInDays());
+    }
 }
