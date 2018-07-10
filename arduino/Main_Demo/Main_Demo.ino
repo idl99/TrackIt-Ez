@@ -9,9 +9,11 @@ const char* password = "AHJ1GLELN2J";
 
 // LIbrary for RFID-NFC Module
 #include <MFRC522.h>
+
 // Pin configuration for RFID Module
 #define SS_PIN D4
 #define RST_PIN D3
+
 // Create an instance of RFID
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
