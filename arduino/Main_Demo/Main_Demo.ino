@@ -1,8 +1,8 @@
 // Library for ESP8266 WiFi Module
 #include <ESP8266WiFi.h>
 // WiFi Credentials
-const char* ssid     = "IDL_WIFI";
-const char* password = "AHJ1GLELN2J";
+const char* ssid     = "##########"; // replace with WiFi SSID
+const char* password = "##########"; // replace with WiFi password
 
 // Serial Peripheral Interface
 #include <SPI.h>
@@ -29,8 +29,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 #include <ArduinoJson.h>
 
 // Firebase Credentials
-#define FIREBASE_HOST "trackit-ez.firebaseio.com"
-#define FIREBASE_SECRET "IPglLeYsAg1MIYFTKRfwCTIqk6atz9pdmEsgMhA7"
+#define FIREBASE_HOST "##########" // add Firebase host
+#define FIREBASE_SECRET "##########" // add Firebase secret
 
 void setup() {
   Serial.begin(115200);
